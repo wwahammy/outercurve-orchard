@@ -1,0 +1,46 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Core.Title.Models
+@model Outercurve.Projects.ViewModels.ProjectsAdminIndexViewModel
+
+@{
+    var userIndex = 0;
+
+    Layout.Title = T("Projects").ToString();
+}
+
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+    <div class="manage">@Html.ActionLink(T("Add a new Project").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
+
+    <fieldset>
+        <table class="items">
+            <thead>
+                <tr>
+
+                    <th scope="col">@T("Name")</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            
+            @foreach (var entry in Model.Projects) {
+                <tr>
+                    <td>
+                        @Html.ActionLink(entry.ProjectItem.As<TitlePart>().Title, "Edit", new {entry.ProjectItem.Id})
+                    </td>
+                    <td>
+                        @Html.ItemDisplayLink(T("View").Text, entry.ProjectItem)
+                        @T(" | ")
+                        @Html.ActionLink("Delete", "Delete", new {entry.ProjectItem.Id }, new { itemprop = "RemoveUrl UnsafeUrl" })
+                    </td>
+                </tr>
+
+
+                userIndex++;
+            }
+        </table>
+        
+        @Display(Model.Pager)
+    </fieldset>
+}
+    

@@ -1,0 +1,3 @@
+﻿@using Orchard.ContentManagement
+@Html.ActionLink((string)@Model.ContentItem.CLAPart.CLASigner.FullName(), "Project", new RouteValueDictionary { {"id", }})
+@Html.ItemDisplayLink((string)@Model.ContentItem.CLAPart.CLASigner.FullName(), (IContent)@Model.ContentItem)

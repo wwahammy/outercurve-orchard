@@ -1,0 +1,8 @@
+﻿@using MarkdownSharp
+@{
+    var Markdown = new Markdown();
+}
+<h2>@Model.Title</h2>
+
+@Html.Raw(Markdown.Transform(Model.CLA))
+

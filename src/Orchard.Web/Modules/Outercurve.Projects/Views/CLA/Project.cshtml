@@ -1,0 +1,42 @@
+﻿@model Outercurve.Projects.ViewModels.CLAProjectViewModel
+
+@{
+    Layout.Title = Model.Name;
+}
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Is Valid</th>
+            <th>Valid From</th>
+             </tr>
+        </thead>
+        @foreach (var i in Model.Items) {
+            var klass = i.IsValid ? "success" : "error";
+        
+            <tr class="@(klass)">
+                <td>
+                    @i.LastName
+                </td>
+                <td>
+                    @i.FirstName
+                </td>
+                <td>
+                    @if (i.IsValid) {
+                        <i class="icon-ok" />
+                    }
+                </td>
+                <td>
+                    @if (i.IsValid) {
+                        @i.ValidFrom
+                    }
+                    else {
+                       @:-
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+

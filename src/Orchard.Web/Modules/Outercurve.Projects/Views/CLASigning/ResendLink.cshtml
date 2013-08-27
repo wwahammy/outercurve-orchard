@@ -1,0 +1,27 @@
+﻿@using Outercurve.Projects.Helpers
+@model Outercurve.Projects.ViewModels.CLASigning.ResendLinkViewModel
+
+@using(Html.BeginFormAntiForgeryPost()){
+    @Html.HiddenFor(m => Model.CLAId)
+
+    <div class="row">
+        <div class="control-group">
+            @Html.ControlLabelFor(m => m.CompanyContact, T("Contact at the company"))
+            <div class="controls">
+                @Html.TextBoxFor(m => m.CompanyContact)
+                @Html.ControlValidationMessageFor(m => m.CompanyContact, null)
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.ControlLabelFor(m => m.CompanyContactEmail, T("Email"))
+            <div class="controls">
+                @Html.TextBoxFor(m => m.CompanyContactEmail)
+                @Html.ControlValidationMessageFor(m => m.CompanyContactEmail, null)
+            </div>
+        </div>
+
+        <button type="submit" value="Send"/>
+    </div>
+}
+

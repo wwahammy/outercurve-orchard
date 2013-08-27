@@ -1,0 +1,122 @@
+﻿@using Outercurve.Projects.Helpers
+@model Outercurve.Projects.ViewModels.RegisterForMsdnViewModel
+
+@{
+    Layout.Title = "MSDN Subscription Request for Outercurve Contributors";
+}
+    <p>The MSDN Subscription benefit is provided by Microsoft, with an interest in promoting
+            quality open source software on the Windows and Azure platforms.</p>
+
+        <p>Please enter in all information correctly, if you have an MSDN subscription
+            already, please ensure the subscription code is entered in the appropriate field.
+            The MSDN Subscription requests are processes once per month--so it may take
+            anywhere from 2-8 weeks to process.</p>
+@using (Html.BeginFormAntiForgeryPost()) {
+    <div class="form-horizontal container-fluid"> 
+        <div class="row">
+
+            
+             
+    
+        
+            <div class="page-header">
+                <h3>Personal Details:</h3>
+            </div>
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.FirstName, T("First Name"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.FirstName)
+                    @Html.ControlValidationMessageFor(m => m.FirstName, null)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.LastName, T("Last Name"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.LastName)
+                    @Html.ControlValidationMessageFor(m => m.LastName, null)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Address1, T("Address1"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Address1)
+                    @Html.ControlValidationMessageFor(m => m.Address1, null)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Address2, T("Address 2"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Address2)
+                    @Html.ControlValidationMessageFor(m => m.Address2, null)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.City, T("City"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.City)
+                    @Html.ControlValidationMessageFor(m => m.City, null)
+                </div>
+            </div>
+       
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.State, T("State"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.State)
+                    @Html.ControlValidationMessageFor(m => m.State, null)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.ZipCode, T("Zip/Postal Code"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ZipCode)
+                    @Html.ControlValidationMessageFor(m => m.ZipCode, null)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Country, T("Country"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Country)
+                    @Html.ControlValidationMessageFor(m => m.Country, null)
+                </div>
+            </div>
+
+        
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.CurrentMsdnNumber, T("Current MSDN Number (if you have one)"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.CurrentMsdnNumber)
+                    @Html.ControlValidationMessageFor(m => m.CurrentMsdnNumber, null)
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="page-header">
+                <h3>Project Details:</h3>
+            </div>
+        
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Project, T("Project"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Project)
+                    @Html.ControlValidationMessageFor(m => m.Project, null)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Rationale, T("Reason for MSDN subscription"))
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Rationale)
+                    @Html.ControlValidationMessageFor(m => m.Rationale, null)
+                    <span class="help-block">How do you envision a MSDN subscription benefiting your project, or how has an MSDN subscription benefited your project? It is critical that you provide sufficent detail on how the sponsored MSDN subscription is benefitting your Outercurve project work.</span>
+                </div>
+                
+            </div>
+
+        </div>
+        <input type="submit"/>
+    </div>
+}
+

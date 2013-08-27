@@ -1,0 +1,23 @@
+﻿@using Orchard.ContentManagement
+@{
+    Style.Include("CLAValidity.css");
+}
+
+<h1>@Model.CLASigner - @Html.ItemDisplayLink((string)@Model.Project, (IContent)@Model.ProjectPart)</h1>
+
+@if (@Model.IsValid)
+{
+  <div class="cla-is-valid cla-validity"><h2 >Valid</h2></div>
+
+}
+else
+{
+    <div class="cla-not-valid cla-validity"><h2>NOT Valid</h2></div>
+}
+<!--
+    <dl>
+        <dt>Valid on:</dt>
+        <dd>@Model.ValidDate</dd>
+        <dt>Foundation Signer:</dt>
+        <dd>@Model.FoundationSigner</dd>
+    </dl>-->

@@ -1,0 +1,74 @@
+﻿@using MarkdownSharp
+@using Outercurve.Projects.Helpers
+@model Outercurve.Projects.ViewModels.CLASigning.SignCompanyViewModel
+@{
+    var markdown = new Markdown();
+}
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.HiddenFor(model => model.ProjectId)
+    @Html.HiddenFor(model => model.CLAId)
+    <h2>@Model.ProjectName</h2>
+    <p>
+        @Model.FirstName @Model.LastName<br/>
+        @Model.Address1<br/>
+        @if (!String.IsNullOrEmpty(Model.Address2)) {
+            Html.DisplayText(Model.Address2);
+            <br/>
+        }
+        @Model.City, @Model.State @Model.ZipCode @Model.Country<br/>
+        @Model.Email
+
+    </p>
+
+    <div class="row">
+        <div class="page-header">
+            <h2 style="margin-bottom: -5px;">Contributor License Agreement:</h2>
+    
+        </div>
+        <div class="span12">
+            @Html.RenderMarkdown(Model.CLA);
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="page-header">
+            <h2 style="margin-bottom: -5px;">Personal Details:</h2>
+        </div>
+        <div class="span12">
+            @Model.FirstName @Model.LastName<br/>
+            @Model.Address1<br/>
+            @if (!String.IsNullOrEmpty(Model.Address2)) {
+                Html.DisplayText(Model.Address2);
+                <br/>
+            }
+            @Model.City, @Model.State @Model.ZipCode @Model.Country<br/>
+            @Model.Email
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="page-header">
+            <h2 style="margin-bottom: -5px;">Your Details:</h2>
+        </div>
+        
+    <div class="span4">
+        <div class="control-group">
+            @Html.ControlLabelFor(m => m.CompanyContact, T("Your Name"))
+            <div class="controls">
+                @Html.TextBoxFor(m => m.CompanyContact)
+                @Html.ControlValidationMessageFor(m => m.CompanyContact, null)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.ControlLabelFor(m => m.CompanyContactEmail, T("Your Email"))
+            <div class="controls">
+                @Html.TextBoxFor(m => m.CompanyContactEmail)
+                @Html.ControlValidationMessageFor(m => m.CompanyContactEmail, null)
+            </div>
+        </div>
+
+        </div>
+    </div>
+    
+    <input type="submit" value="Sign CLA" />
+}

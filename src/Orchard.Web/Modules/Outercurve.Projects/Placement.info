@@ -1,0 +1,43 @@
+﻿<Placement>
+
+  <Match ContentType="CLA">
+    <Place Parts_Common_Container_Edit="-"/>
+
+    <Place Parts_Container_Edit="-"/>
+    <Place Parts_CLA_Edit="Content:10"/>
+    
+  </Match>
+
+  <Match ContentType="CLATemplate">
+    <Place Parts_CLATemplate_Edit="Content:10"/>
+    <Place Parts_CLATemplate="Content:10"/>
+  </Match>
+  
+  
+  <Match ContentType="Gallery">
+    <Place Parts_Title="Content:1"/>
+    <Place Parts_MultipleLeader="Content:2"/>
+    <Place List="Content:3"/>
+    <Place Parts_MultipleLeader_Edit="Content:10"/>
+    <Place Parts_Common_Container_Edit="-"/>
+   
+    <Place Parts_Container_Edit="-"/>
+  </Match>
+
+  <Match ContentType="Project">
+    <Place Parts_Title="Content:1"/>
+    <Place Parts_MultipleLeader="Content:2"/>
+    <Place List="Content:3"/>
+    <Place Parts_MultipleLeader_Edit="Content:10"/>
+    <Place Parts_Project_Edit="Content:11"/>
+    <Place Parts_Common_Container_Edit="-"/>
+    <Place Parts_Container_Edit="-"/>
+  </Match>
+  
+  <Place Parts_Common_Metadata="-"/>
+  <Place Parts_Common_Metadata_Summary="-"/>
+  <Place Parts_Common_Owner_Edit="Content:10"/>
+  <Place Parts_ExtendedUser_Edit="Content:10"/>
+  <Place Parts_ExtendedUser="Content:10"/>
+  <Place Parts_CLA="Content:10"/>
+</Placement>

@@ -1,0 +1,12 @@
+﻿@model Outercurve.Projects.ViewModels.Parts.EditProjectViewModel
+
+
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.SelectedTemplate_Id, T("CLA"))
+</div>
+    
+<div class="editor-field">
+    @Html.DropDownListFor(m => m.SelectedTemplate_Id, Model.AllTemplates.Select(p => new SelectListItem { Text = p.CLATitle, Value = p.Record.Id.ToString(), Selected = p.Record.Id == Model.SelectedTemplate_Id}))
+    @Html.ValidationMessageFor(model => model.SelectedTemplate_Id)
+</div>

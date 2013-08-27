@@ -1,0 +1,37 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Core.Title.Models
+@model Outercurve.Projects.ViewModels.GalleryAdminIndexViewModel
+@{
+    Layout.Title = T("Galleries").ToString();
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+    <div class="manage">@Html.ActionLink(T("Add a new gallery").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
+
+    <fieldset>
+        <table class="items">
+            <thead>
+                <tr>
+
+                    <th scope="col">@T("Name")</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            
+            @foreach (var entry in Model.Galleries) {
+                <tr>
+                    <td>
+                        @Html.ActionLink(entry.GalleryItem.As<TitlePart>().Title, "Edit", new {entry.GalleryItem.Id})
+                    </td>
+                    <td>
+                        @Html.ItemDisplayLink(T("View").Text, entry.GalleryItem)
+                        @T(" | ")
+                        @Html.ActionLink("Delete", "Delete", new {entry.GalleryItem.Id }, new { itemprop = "RemoveUrl UnsafeUrl" })
+                    </td>
+                </tr>
+            }
+        </table>
+        @Display(Model.Pager)
+    </fieldset>
+}

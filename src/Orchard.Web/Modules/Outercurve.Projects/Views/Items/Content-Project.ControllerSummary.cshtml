@@ -1,0 +1,3 @@
+﻿@using Orchard.ContentManagement
+@Html.ActionLink((string)@Model.ContentItem.TitlePart.Title, "Project", new { Area = "Outercurve.Projects", Id = (string)Model.ContentItem.Id.ToString() })
+             

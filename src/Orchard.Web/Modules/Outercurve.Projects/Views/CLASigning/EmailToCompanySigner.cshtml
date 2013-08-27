@@ -1,0 +1,15 @@
+﻿@model Outercurve.Projects.ViewModels.CLASigning.EmailToCompanySignerViewModel
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>title</title>
+    </head>
+    <body>
+        <div>
+            <p>Dear @Model.CompanySigner,</p>
+            <p>@Model.FirstName @Model.LastName would like to be a contributor to @Model.ProjectName . Please sign on your company's behalf. @Html.Link(Model.Link,Model.Link)) </p>
+        </div>
+    </body>
+</html>

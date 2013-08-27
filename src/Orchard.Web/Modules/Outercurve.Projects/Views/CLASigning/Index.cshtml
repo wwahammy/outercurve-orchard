@@ -1,0 +1,11 @@
+﻿@model Outercurve.Projects.ViewModels.CLASigning.IndexViewModel
+
+<h1>Projects</h1>
+
+<ul>
+@foreach (var p in Model.Projects) {
+    
+    <li>@Html.ActionLink(p.Name, "Choose", new RouteValueDictionary { {"id", p.Id}})</li>
+}
+
+</ul>

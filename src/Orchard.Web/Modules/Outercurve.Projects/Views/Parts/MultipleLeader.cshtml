@@ -1,0 +1,5 @@
+﻿@using System.Linq
+@{
+    var leaderString = String.Join(T(", ").Text, Model.Leaders as IEnumerable<string>);
+}
+@leaderString

@@ -1,0 +1,20 @@
+﻿@using Outercurve.Projects.Helpers
+@using Outercurve.Projects.Services
+@model Outercurve.Projects.ViewModels.MultipleLeaderRowViewModel
+
+
+    @using (Html.BeginCollectionItem("MultipleLeader.UsernamesForLeadersSelected"))
+    {
+        <div class="editorRow">
+        <div class="editor-label">
+            @Html.LabelFor(m => m.SelectedUserName, T("Leader"))
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(m => m.SelectedUserName,
+                (ViewData["AllUsers"] as IList<SelectListEntry>).Select(l => new SelectListItem { Text = l.Name, Value = l.Id, Selected = l.Id == Model.SelectedUserName}))
+            <a href="#" class="deleteRow">delete</a>
+        </div>
+       </div>
+       
+    }
+ 

@@ -1,0 +1,26 @@
+﻿@model Outercurve.Projects.ViewModels.CLAIndexViewModel
+           
+@{
+    Layout.Title = "CLA Viewing";
+}
+
+<h1> CLA Viewing</h1>
+
+<h2>Projects</h2>
+
+
+
+    @foreach (var i in Model.Projects) {
+        @Display(i.Item2)
+    }
+        <h2>Galleries</h2>
+
+    @foreach (var i in Model.Galleries) {
+        <h3></h3>
+        <div style="padding-left: 20px">
+        @foreach (var j in i.Projects) {
+            @Display(j)
+        }
+       </div>
+    }
+

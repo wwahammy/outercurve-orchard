@@ -1,0 +1,165 @@
+﻿@using MarkdownSharp
+@using Outercurve.Projects.Helpers
+@model Outercurve.Projects.ViewModels.CLASigning.SignIndividualViewModel
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    
+    @Html.HiddenFor(model => model.ProjectId)
+    @Html.HiddenFor(model => model.NeedCompanySignature)
+
+    
+    <div class="row">
+        <div class="page-header">
+            <h2 style="margin-bottom: -5px;">Contributor License Agreement:</h2>
+    
+        </div>
+        <div class="span12">
+            @Html.RenderMarkdown(Model.CLA)
+        </div>
+    </div>
+    
+    <div class="row">
+            <div class="page-header">
+                <h2 style="margin-bottom: -5px;">Personal Details:</h2>
+            </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="span4">
+
+            <div class="control-group">
+                @Html.ControlLabelFor(model => model.FirstName, T("First Name"))
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.FirstName)
+                    @Html.ControlValidationMessageFor(m => m.FirstName, null)
+                </div>
+            </div>
+           
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.LastName, T("Last Name"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.LastName)
+                    @Html.ControlValidationMessageFor(m => m.LastName, null)
+                </div>
+            </div>
+           
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Email, T("Your Email"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ControlValidationMessageFor(m => m.Email, null)
+                </div>
+            </div>
+           
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Employer, T("Your Employer"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Employer)
+                    @Html.ControlValidationMessageFor(m => m.Employer, null)
+                </div>
+            </div>
+        </div>
+        
+        <div class="span4">
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Address1, T("Address1"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Address1)
+                    @Html.ControlValidationMessageFor(m => m.Address1, null)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Address2, T("Address2"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Address2)
+                    @Html.ControlValidationMessageFor(m => m.Address2, null)
+                </div>
+            </div>
+            
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.City, T("City"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.City)
+                    @Html.ControlValidationMessageFor(m => m.City, null)
+                </div>
+            </div>
+            
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.State, T("State/Province"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.State)
+                    @Html.ControlValidationMessageFor(m => m.State, null)
+                </div>
+            </div>
+            
+            
+        </div>
+        
+        <div class="span4">
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.ZipCode, T("Postal Code"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ZipCode)
+                    @Html.ControlValidationMessageFor(m => m.ZipCode, null)
+                </div>
+            </div>
+            
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Country, T("Country"))
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Country)
+                    @Html.ControlValidationMessageFor(m => m.Country, null)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+
+    
+    
+
+    if (Model.NeedCompanySignature) {
+        <div class="row">
+            
+            <div class="page-header">
+                <h2 style="margin-bottom: -5px;">Company Signature:</h2>
+            </div>
+                
+            <div class="span12">
+                <div class="row">
+                    <div class="control-group">
+                        @Html.ControlLabelFor(m => m.CompanyContact, T("Company Contact Name"))
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.CompanyContact)
+                            @Html.ControlValidationMessageFor(m => m.CompanyContact, null)
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        @Html.ControlLabelFor(m => m.CompanyContactEmail, T("Company Contact Email"))
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.CompanyContactEmail)
+                            @Html.ControlValidationMessageFor(m => m.CompanyContactEmail, null)
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+                
+             
+            
+            
+        </div>
+        }
+      else {
+          Html.HiddenFor(model => model.CompanyContact);
+          Html.HiddenFor(model => model.CompanyContactEmail);
+      }
+      
+    
+      
+    <input type="submit" value="Sign CLA" />
+}

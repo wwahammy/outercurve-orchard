@@ -1,0 +1,78 @@
+/* STICKY FOOTER
+================================================== */
+#footer, #push { height: 115px; }
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    #footer { margin-left: -20px; margin-right: -20px; padding-left: 20px; padding-right: 20px; }
+}
+
+/* BOOTSWATCH ADJUSTMENTS
+================================================== */
+/* Set the top margin on the content Section to 0. Change the top padding to 0 unless using a fixed navbar */
+#content { padding-top: 0; margin-top: 0; }
+.navbar-fixed-top + #content { padding-top: 60px; }
+/* remove the bottom margin */
+.subnav { margin-bottom: 0; }
+.well { padding: 5px 10px; }
+.widget .page-header { margin: 0 0 5px; padding-bottom: 0; }
+
+/* BACK TO TOP
+================================================== */
+#toTop { bottom: 10px; cursor: pointer; display: none; position: fixed; right: 5px; text-align: center; z-index: 500; }
+#toTop:hover { opacity: .7; }
+
+/* FORM ERROR STYLING
+================================================== */
+.input-validation-error { border-color: #bd4247 !important; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075) !important; -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075) !important; box-shadow: inset 0 1px 1px rgba(0,0,0,0.075) !important; }
+.validation-summary-errors, .field-validation-error { font-size: .9em; color: #bd4247; }
+
+/* LOGIN/REGISTRATION FORM STYLING
+================================================== */
+/* set size and position of login/registration form */
+.logreg { width: 450px; margin: 40px auto; padding: 20px 10px; border-radius: 10px; }
+.logreg .lregister { text-align: center; }
+/* adjust position/size of login/registration form labels and inputs */
+.logreg .control-label { width: 80px; }
+.logreg.changepassword .control-label, .logreg.lostpassword .control-label { padding-top: 0; }
+.logreg .controls { margin-left: 100px; }
+.logreg input[type="text"], .logreg .form-horizontal input[type="password"], .logreg .form-horizontal textarea { width: 90%; }
+/* form action style */
+.logreg .form-actions { padding: 5px 20px 5px; padding-left: 100px; background: transparent; border-top: 0px; }
+
+/* SEARCH WIDGET STYLING
+================================================== */
+.widget-search-form { float: none !important; }
+
+/* TWITTER WIDGET STYLING
+================================================== */
+.latest-twitter-list h5 { display: inline-block; margin: 0; }
+.latest-twitter-list { margin-left: 0; }
+
+/* BLOG STYLING
+================================================== */
+/* change padding on wells */
+.meta.well, .metadata.well, .comment.well { padding: 5px; }
+.tags, .meta { font-size: .9em; }
+/* move comment count inline with other meta items */
+.commentcount { margin-top: -20px !important; margin-right: 5px; }
+/* remove list style and margin from blog list */
+.search-results.content-items, .blog-posts, .tagged-posts, .comment-list, .archive-trail + ul { list-style: none; margin-left: 0; }
+/* reduce size of author & meta and display on same line */
+.comment-author, .cmeta { font-size: .9em; display: inline-block; }
+/* create space between meta and comment text */
+.comment p { margin-top: 5px; }
+/* add spacing for threaded comments */
+.comment .comment-list { margin: 20px 20px 0; }
+/* adjust position/size of comment form labels and inputs */
+.comment-form .control-label { width: 80px; }
+.comment-form .controls { margin-left: 100px; }
+.comment-form .comment-text { width: 98%; }
+
+/* SHAREBAR STYLING
+================================================== */
+.well .sharebar { padding-top: 12px; }
+
+/* PAGER STYLING
+================================================== */
+.pager li > a, .pager li > span { -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }

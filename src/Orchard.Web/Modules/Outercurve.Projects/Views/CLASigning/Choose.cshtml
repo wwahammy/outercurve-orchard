@@ -1,0 +1,7 @@
+﻿@model Outercurve.Projects.ViewModels.CLASigning.ChooseViewModel
+
+
+<ul>
+    <li>@Html.ActionLink("Individual", "SignIndividual", new RouteValueDictionary{ {"id", Model.ProjectId}})</li>
+    <li>@Html.ActionLink("Need Company Signature", "SignIndividual", new RouteValueDictionary{ {"id", Model.ProjectId}, {"needCountersign", true}})</li>
+</ul>

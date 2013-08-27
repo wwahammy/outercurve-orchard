@@ -1,0 +1,36 @@
+﻿@model Outercurve.Projects.ViewModels.QuickUserViewModel
+
+@{ Layout.Title = T("Quick Create User").ToString(); }
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+    <fieldset>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Email, T("Email Address"))
+    </div>
+    
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.FirstName, T("First Name"))
+    </div>
+    
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.LastName, T("Last Name"))
+    </div>
+    
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.LastName)
+        @Html.ValidationMessageFor(model => model.LastName)
+    </div>
+    <input type="submit" class = "button primaryAction"/>
+    </fieldset>
+}

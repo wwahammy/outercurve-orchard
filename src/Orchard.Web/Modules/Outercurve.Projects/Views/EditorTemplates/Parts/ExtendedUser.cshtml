@@ -1,0 +1,27 @@
+﻿@model Outercurve.Projects.ViewModels.EditExtendedUserViewModel
+          
+<fieldset>
+    
+    <legend>Extended User Info</legend>
+    
+    @Html.HiddenFor(model => model.Id)
+    <div class="editor-label">
+        @Html.LabelFor(model => model.FirstName, T("First Name"))
+    </div>
+    
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.LastName, T("Last Name"))
+    </div>
+    
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.LastName)
+        @Html.ValidationMessageFor(model => model.LastName)
+    </div>
+
+
+</fieldset>

@@ -1,0 +1,5 @@
+﻿@model Orchard.Core.Title.Models.TitlePart
+<fieldset>
+    @Html.LabelFor(m => m.Title, T("Name"))
+    @Html.TextBoxFor(m => m.Title, new { @class = "large text", autofocus = "autofocus" })
+</fieldset>

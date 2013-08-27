@@ -1,0 +1,21 @@
+﻿@using Outercurve.Projects.Services
+@using Outercurve.Projects.ViewModels
+@model Outercurve.Projects.ViewModels.EditMultipleLeaderViewModel
+@{
+    Script.Require("listEditor");
+}
+<fieldset>
+    <legend>Leaders</legend>
+    <div>@Html.ActionLink("Quick Add User", "Create", new { Controller = "QuickUserAdmin", Area = "Outercurve.Projects", returnUrl = Context.Request.RawUrl }, new {@class = "button primaryAction"});</div>
+    <div id="editorRows">
+        @foreach (var i in Model.UsernamesForLeadersSelected) {
+            Html.RenderPartial("MultipleLeaderRowPartial", i);
+    
+        }
+    </div>
+</fieldset>
+
+@Html.ActionLink("Add another leader", "AddOwner", "Simple", new {Area="Outercurve.Projects"}, new { id= "addItem"})
+
+
+    
