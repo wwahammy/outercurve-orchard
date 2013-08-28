@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="OrchardCloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2013-03.2.0">
-  <WebRole name="Orchard.Azure.Web">
+  <WebRole name="Orchard.Azure.Web" vmsize="ExtraSmall">
     <Sites>
       <Site name="Web">
         <Bindings>
