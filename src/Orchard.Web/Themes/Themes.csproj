@@ -54,51 +54,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrap\AdminMenu.cs" />
-    <Compile Include="Bootstrap\Constants.cs" />
-    <Compile Include="Bootstrap\Controllers\AdminController.cs" />
-    <Compile Include="Bootstrap\Filters\AlternateCssFilter.cs" />
-    <Compile Include="Bootstrap\Filters\LayoutFilter.cs" />
-    <Compile Include="Bootstrap\Migrations.cs" />
-    <Compile Include="Bootstrap\Models\ThemeSettingsRecord.cs" />
-    <Compile Include="Bootstrap\Permissions.cs" />
-    <Compile Include="Bootstrap\ResourceManifest.cs" />
-    <Compile Include="Bootstrap\Routes.cs" />
-    <Compile Include="Bootstrap\Services\IThemeSettingsService.cs" />
-    <Compile Include="Bootstrap\Services\ThemeSettingsService.cs" />
-    <Compile Include="Bootstrap\ViewModels\ThemeSettingsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bootstrap\Bootstrap.csproj" />
-    <Content Include="Bootstrap\Content\font\font-awesome\fontawesome-webfont.svg" />
-    <Content Include="Bootstrap\Content\glyphicons-halflings-white.png" />
-    <Content Include="Bootstrap\Content\glyphicons-halflings.png" />
-    <Content Include="Bootstrap\Scripts\bootstrap.min.js" />
-    <Content Include="Bootstrap\Scripts\custom.js" />
-    <Content Include="Bootstrap\Scripts\respond.min.js" />
-    <Content Include="Bootstrap\Styles\amelia.min.css" />
-    <Content Include="Bootstrap\Styles\bootstrap-responsive.min.css" />
-    <Content Include="Bootstrap\Styles\bootstrap.min.css" />
-    <Content Include="Bootstrap\Styles\bootswatch.css" />
-    <Content Include="Bootstrap\Styles\cerulean.min.css" />
-    <Content Include="Bootstrap\Styles\cosmo.min.css" />
-    <Content Include="Bootstrap\Styles\cyborg.min.css" />
-    <Content Include="Bootstrap\Styles\flatly.min.css" />
-    <Content Include="Bootstrap\Styles\font-awesome-ie7.min.css" />
-    <Content Include="Bootstrap\Styles\font-awesome.min.css" />
-    <Content Include="Bootstrap\Styles\journal.min.css" />
-    <Content Include="Bootstrap\Styles\readable.min.css" />
-    <Content Include="Bootstrap\Styles\simplex.min.css" />
-    <Content Include="Bootstrap\Styles\slate.min.css" />
-    <Content Include="Bootstrap\Styles\spacelab.min.css" />
-    <Content Include="Bootstrap\Styles\spruce.min.css" />
-    <Content Include="Bootstrap\Styles\superhero.min.css" />
-    <Content Include="Bootstrap\Styles\theme.css" />
-    <Content Include="Bootstrap\Styles\united.min.css" />
-    <Content Include="Bootstrap\Theme.png" />
-    <Content Include="Bootstrap\Theme.txt" />
-    <Content Include="Bootstrap\ThemeZonePreview.png" />
     <Content Include="TheAdmin\Scripts\admin.js" />
     <Content Include="TheAdmin\Styles\ie.css" />
     <Content Include="TheAdmin\Styles\ie7.css" />
@@ -206,66 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TheAdmin\Views\ErrorPage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Bootstrap\Content\font\font-awesome\fontawesome-webfont.eot" />
-    <Content Include="Bootstrap\Content\font\font-awesome\fontawesome-webfont.ttf" />
-    <Content Include="Bootstrap\Content\font\font-awesome\fontawesome-webfont.woff" />
-    <Content Include="Bootstrap\Content\font\font-awesome\FontAwesome.otf" />
-    <Content Include="Bootstrap\Content\Web.config" />
-    <Content Include="Bootstrap\Placement.info" />
-    <Content Include="Bootstrap\README.md" />
-    <Content Include="Bootstrap\Scripts\Web.config" />
-    <Content Include="Bootstrap\Styles\Web.config" />
-    <Content Include="Bootstrap\Views\Admin\Index.cshtml" />
-    <Content Include="Bootstrap\Views\BadgeOfHonor.cshtml" />
-    <Content Include="Bootstrap\Views\Branding.cshtml" />
-    <Content Include="Bootstrap\Views\CommentAuthor.cshtml" />
-    <Content Include="Bootstrap\Views\CommentMetadata.cshtml" />
-    <Content Include="Bootstrap\Views\CommentReplyButton.cshtml" />
-    <Content Include="Bootstrap\Views\Document.cshtml" />
-    <Content Include="Bootstrap\Views\EditorTemplates\Parts.Comment.cshtml" />
-    <Content Include="Bootstrap\Views\Layout.cshtml" />
-    <Content Include="Bootstrap\Views\ListOfComments.cshtml" />
-    <Content Include="Bootstrap\Views\LogOn.cshtml" />
-    <Content Include="Bootstrap\Views\Menu.cshtml" />
-    <Content Include="Bootstrap\Views\MenuItem.cshtml" />
-    <Content Include="Bootstrap\Views\MenuItemLink.cshtml" />
-    <Content Include="Bootstrap\Views\MenuItemLinkdd.cshtml" />
-    <Content Include="Bootstrap\Views\Message.cshtml" />
-    <Content Include="Bootstrap\Views\Orchard.Users\Account\ChangePassword.cshtml" />
-    <Content Include="Bootstrap\Views\Orchard.Users\Account\LostPassword.cshtml" />
-    <Content Include="Bootstrap\Views\Orchard.Users\Account\RequestLostPassword.cshtml" />
-    <Content Include="Bootstrap\Views\Pager.cshtml" />
-    <Content Include="Bootstrap\Views\Pager.CurrentPage.cshtml" />
-    <Content Include="Bootstrap\Views\Pager.First.cshtml" />
-    <Content Include="Bootstrap\Views\Pager.Gap.cshtml" />
-    <Content Include="Bootstrap\Views\Pager.Last.cshtml" />
-    <Content Include="Bootstrap\Views\Pager.Next.cshtml" />
-    <Content Include="Bootstrap\Views\Pager.Previous.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Blogs.BlogArchives.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Blogs.RecentBlogPosts.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Comment.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\CommentForm.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Comments.Count.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Comments.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Common.Body.Summary.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Common.Metadata.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Common.Metadata.Summary.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\ListOfComments.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Search.SearchForm.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Share.ShareBar-BlogPost.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Tags.ShowTags.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Title-BlogPost.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Title.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\Title.Summary-BlogPost.cshtml" />
-    <Content Include="Bootstrap\Views\Parts\TwitterWidget.cshtml" />
-    <Content Include="Bootstrap\Views\Register.cshtml" />
-    <Content Include="Bootstrap\Views\SearchNav.cshtml" />
-    <Content Include="Bootstrap\Views\User.cshtml" />
-    <Content Include="Bootstrap\Views\Web.config" />
-    <Content Include="Bootstrap\Views\Widget.Wrapper.cshtml" />
-    <Content Include="Bootstrap\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -23,6 +23,9 @@ using Outercurve.Projects.Helpers;
 
 namespace Outercurve.Projects.Services
 {
+
+    public delegate string CreateHtmlForCompanySignerEmail(string projectName, string firstName, string lastName, string companySigner, string link);
+
     public interface ICLASigningService : IDependency {
         string CreateCompanySigningNonce(int claId);
 
@@ -60,7 +63,7 @@ namespace Outercurve.Projects.Services
         /// <param name="helper"></param>
         /// <param name="emailToCompanySigner">An embarrassing, awful hack</param>
         /// <returns></returns>
-        ContentItem SignIndividual(SignIndividualViewModel model, IUser user, IUrlHelper helper, Func<string,string,string,string,string, string> emailToCompanySigner);
+        ContentItem SignIndividual(SignIndividualViewModel model, IUser user, IUrlHelper helper, CreateHtmlForCompanySignerEmail emailToCompanySigner);
         
         /// <summary>
         /// Emails the user of the invalid employer signing nonce and gives them a link to resend the link to the employer
@@ -73,7 +76,7 @@ namespace Outercurve.Projects.Services
         ContentItem SignCompany(SignCompanyViewModel model, IUrlHelper helper);
 
 
-        ContentItem ResendNewNonceLink(ResendLinkViewModel model, IUrlHelper helper, Func<string, string, string, string, string, string> emailToCompanySigner);
+        ContentItem ResendNewNonceLink(ResendLinkViewModel model, IUrlHelper helper, CreateHtmlForCompanySignerEmail emailToCompanySigner);
     }
 
 
@@ -191,7 +194,7 @@ namespace Outercurve.Projects.Services
        }
 
 
-       public ContentItem SignIndividual(SignIndividualViewModel model, IUser user, IUrlHelper helper, Func<string, string, string, string, string, string> emailToCompanySigner)
+       public ContentItem SignIndividual(SignIndividualViewModel model, IUser user, IUrlHelper helper, CreateHtmlForCompanySignerEmail emailToCompanySigner)
        {
 
             var project = _contentManager.Get(model.ProjectId);
@@ -215,7 +218,7 @@ namespace Outercurve.Projects.Services
 
         }
 
-       public ContentItem ResendNewNonceLink(ResendLinkViewModel model, IUrlHelper helper, Func<string, string, string, string, string, string> emailToCompanySigner)
+       public ContentItem ResendNewNonceLink(ResendLinkViewModel model, IUrlHelper helper, CreateHtmlForCompanySignerEmail emailToCompanySigner)
        {
             var cla = _contentManager.Get(model.CLAId);
 
@@ -233,7 +236,7 @@ namespace Outercurve.Projects.Services
             _messageManager.Send(new[] {cla.SignerEmail}, "CLAMessage", "email", new Dictionary<string, string> {{"Body", link}});
         }
 
-        private void SendCompanyLink(ContentItem claItem, IUrlHelper helper, string companyContactEmail, string companySigner, Func<string, string, string, string, string, string> emailToCompanySigner)
+        private void SendCompanyLink(ContentItem claItem, IUrlHelper helper, string companyContactEmail, string companySigner, CreateHtmlForCompanySignerEmail emailToCompanySigner)
         {
             if (!IsCLAPartValid(claItem) && DoesCLAPartRequireEmployerSignature(claItem))
             {

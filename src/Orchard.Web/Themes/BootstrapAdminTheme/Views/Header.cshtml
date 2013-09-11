@@ -1,28 +1,7 @@
 ﻿@using Orchard.UI.Resources
 @using BootstrapAdminTheme
 @model dynamic
-@{
-    Style.Include("bootstrap.min.css");
-    @* Style.Include("bootstrap-datepicker.css"); *@
-    Style.Include("validationEngine.jquery.css");
-    Style.Include("jquery.dataTables.css");
-    Style.Include("font-awesome.min.css");
-    Style.Include("font-awesome-ie7.min.css").UseCondition("IE");
-    Style.Include("SiteOverrides.css");
 
-    Script.Include("bootstrap.min.js");
-    Script.Include("date.js");
-    Script.Include("knockout-2.3.0.min.js");
-    Script.Include("i18n/jquery.validationEngine-pl.js");
-    Script.Include("jquery.validationEngine.js");
-    Script.Include("knockout.mapping-latest.js");
-    @* Script.Include("bootstrap-datepicker.js");
-    Script.Include("i18n/bootstrap-datepicker.pl.js"); *@
-    Script.Include("jquery.dataTables.min.js");
-    Script.Include("datatables-bootstrap.js");
-    Script.Include("ko.observableDictionary.js");
-
-}
 @using(Script.Foot())
 {
     <script type="text/javascript">

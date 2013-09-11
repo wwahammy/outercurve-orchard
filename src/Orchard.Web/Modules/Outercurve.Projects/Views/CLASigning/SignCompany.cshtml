@@ -8,17 +8,6 @@
     @Html.HiddenFor(model => model.ProjectId)
     @Html.HiddenFor(model => model.CLAId)
     <h2>@Model.ProjectName</h2>
-    <p>
-        @Model.FirstName @Model.LastName<br/>
-        @Model.Address1<br/>
-        @if (!String.IsNullOrEmpty(Model.Address2)) {
-            Html.DisplayText(Model.Address2);
-            <br/>
-        }
-        @Model.City, @Model.State @Model.ZipCode @Model.Country<br/>
-        @Model.Email
-
-    </p>
 
     <div class="row">
         <div class="page-header">
@@ -32,7 +21,7 @@
     
     <div class="row">
         <div class="page-header">
-            <h2 style="margin-bottom: -5px;">Personal Details:</h2>
+            <h2 style="margin-bottom: -5px;">Signer's Personal Details:</h2>
         </div>
         <div class="span12">
             @Model.FirstName @Model.LastName<br/>

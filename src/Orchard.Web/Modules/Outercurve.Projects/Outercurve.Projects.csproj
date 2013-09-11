@@ -147,6 +147,8 @@
     <Compile Include="Controllers\CLASigningController.cs" />
     <Compile Include="Controllers\ContributorController.cs" />
     <Compile Include="Controllers\GalleryAdminController.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Controllers\ProjectAdminController.cs" />
     <Compile Include="Controllers\QuickUserAdminController.cs" />
     <Compile Include="Controllers\SimpleController.cs" />
@@ -185,7 +187,6 @@
     <Compile Include="Services\ExtendedUserPartService.cs" />
     <Compile Include="Services\GalleryService.cs" />
     <Compile Include="Services\CLASigningService.cs" />
-    <Compile Include="Services\ImportFromOldExcel.cs" />
     <Compile Include="Services\MultipleLeaderService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\RequestMSDNService.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="ViewModels\EditCLAViewModel.cs" />
     <Compile Include="ViewModels\EditExtendedUserViewModel.cs" />
     <Compile Include="ViewModels\EditMultipleLeaderViewModel.cs" />
+    <Compile Include="ViewModels\Index\IndexViewModel.cs" />
     <Compile Include="ViewModels\Parts\EditCLATemplateViewModel.cs" />
     <Compile Include="ViewModels\Parts\EditProjectViewModel.cs" />
     <Compile Include="ViewModels\ProjectsAdminIndexViewModel.cs" />
@@ -263,12 +265,6 @@
     <Content Include="Views\CLA\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\CLA\ViewGallery.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\CLA\ViewProject.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\Title.TitlePart.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -286,9 +282,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\MultipleLeader.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\CLA\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ToggleButton.cshtml" />
@@ -361,6 +354,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\CLASigning\EmailToCompanySigner.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Index\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

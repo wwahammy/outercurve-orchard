@@ -12,6 +12,7 @@ using Orchard.Core.Containers.Models;
 using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.DisplayManagement;
+using Orchard.Logging;
 using Orchard.Security;
 using Orchard.Settings;
 using Orchard.UI.Admin;
@@ -29,7 +30,7 @@ namespace Outercurve.Projects.Controllers
         private readonly IProjectService _projectService;
         private readonly ICLAToOfficeService _officeService;
         private readonly ICLATemplateService _templateService;
-
+        public ILogger Logger;
 
         public CLAAdminController(IOrchardServices services, IExtendedUserPartService extUserService, IGalleryService galleryService, ITransactionManager transaction, IShapeFactory shapeFactory, ISiteService siteService, IProjectService projectService, 
             ICLAToOfficeService officeService, ICLATemplateService templateService ) :
@@ -44,28 +45,35 @@ namespace Outercurve.Projects.Controllers
              if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list custom forms")))
                 return new HttpUnauthorizedResult();
 
-            var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
+            try {
+
+                var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
 
 
-            var query = _services.ContentManager.Query().ForType("CLA");
-            var pagerShape = Shape.Pager(pager).TotalItemCount(query.Count());
+                var query = _services.ContentManager.Query().ForType("CLA");
+                var pagerShape = Shape.Pager(pager).TotalItemCount(query.Count());
 
-            var results = query.Slice(pager.GetStartIndex(), pager.PageSize);
+                var results = query.Slice(pager.GetStartIndex(), pager.PageSize);
 
 
-            var model = new CLAAdminIndexViewModel {
-                CLAs = results.Select(i => new CLAAdminIndexEntry {
-                    CLAItem = i, 
-                    CLASignerName = _extUserService.GetFullName(i.As<CLAPart>().CLASigner),
-                    FoundationSignerName = i.As<CLAPart>().FoundationSigner == null ? "-" : _extUserService.GetFullName(i.As<CLAPart>().FoundationSigner),
-                    ProjectTitle = i.As<CommonPart>().Container.As<TitlePart>().Title,
-                    SignedDate = i.As<CLAPart>().SignedDate == null? "Not Signed" : i.As<CLAPart>().SignedDate.ToLocalDateString(),
-                    Employer = i.As<CLAPart>().Employer,
-                    IsActive =  i.As<CLAPart>().IsValid
-                }).ToList(),
-                Pager = pagerShape
-            };
-            return View((object) model);
+                var model = new CLAAdminIndexViewModel {
+                    CLAs = results.Select(i => new CLAAdminIndexEntry {
+                        CLAItem = i,
+                       CLASignerName = _extUserService.GetFullName(i.As<CLAPart>().CLASigner),
+                        FoundationSignerName = i.As<CLAPart>().FoundationSigner == null ? "-" : _extUserService.GetFullName(i.As<CLAPart>().FoundationSigner),
+                        ProjectTitle = i.As<CommonPart>().Container == null ? "-" :i.As<CommonPart>().Container.As<TitlePart>().Title,
+                        SignedDate = i.As<CLAPart>().SignedDate == null ? "Not Signed" : i.As<CLAPart>().SignedDate.ToLocalDateString(),
+                        Employer = i.As<CLAPart>().Employer,
+                        IsActive = i.As<CLAPart>().IsValid
+                    }).ToList(),
+                    Pager = pagerShape
+                };
+                return View((object) model);
+            }
+            catch (Exception e) {
+                Logger.Error(e, "holy cow!!");
+                throw;
+            }
         }
 
         public ActionResult Create() {

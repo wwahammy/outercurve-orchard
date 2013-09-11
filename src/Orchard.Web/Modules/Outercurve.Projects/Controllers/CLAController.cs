@@ -56,10 +56,16 @@ namespace Outercurve.Projects.Controllers
             return View((object) listShape);
         }
 
-        public ActionResult Project(int Id) {
+        public ActionResult Project(int Id = 0) {
 
-            var project = _contentManager.Get(Id);
-           
+            var project = GetProject(Id);
+            if (project == null) {
+
+                return RedirectToAction("Projects");
+
+              
+            }
+            
             var query = _services.ContentManager.Query().ForType("CLA").
                 Where<CommonPartRecord>(c => c.Container == project.Record).
                 OrderBy<CLAPartRecord>(c =>
@@ -71,6 +77,20 @@ namespace Outercurve.Projects.Controllers
             var projTitle = project.As<TitlePart>().Title;
            
             return View("Project", (object) new CLAProjectViewModel {Items = list, Name = projTitle});
+        }
+
+        private ContentItem GetProject(int id) {
+            if (id == 0) {
+                return null;
+            }
+            ContentItem output = _contentManager.Get(id);
+            if (output != null && output.ContentType == "Project") {
+                return output;
+            }
+            else {
+                return null;
+            }
+
         }
 
         public ActionResult View(int claId) {

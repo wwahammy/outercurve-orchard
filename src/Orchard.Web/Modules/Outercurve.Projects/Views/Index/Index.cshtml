@@ -1,0 +1,35 @@
+﻿@model Outercurve.Projects.ViewModels.Index.IndexViewModel
+         
+@{
+    Layout.Title = "Outercurve Services";
+}  
+<div class="page-header">
+    <h1>Outercurve Services</h1>
+</div>
+
+<div class="row">
+    <ul>
+        <li>@Html.ActionLink( "View Outercurve Contributors (by project)", "Projects", "CLA")</li>
+    </ul>
+    
+    <ul>
+        <li>@Html.ActionLink("Become an Outercurve Contributor (Sign a CLA)", "Index", "CLASigning")</li>
+    </ul>
+    
+</div>
+
+@if (Model.IsContributor) {
+    <div class="page-header">
+        <h3>Contributor</h3>
+    </div>
+    
+    <ul>
+        <li>@Html.ActionLink("Get an MSDN Subscription","RegisterForMsdn", "Contributor")</li>
+    </ul>
+}
+
+@if (Model.IsProjectLeader) {
+    <div class="page-header">
+        <h3>Project Leader</h3>
+    </div>
+}

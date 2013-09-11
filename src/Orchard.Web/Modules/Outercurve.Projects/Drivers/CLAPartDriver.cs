@@ -10,6 +10,7 @@ using Orchard.Core.Common.Models;
 using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.Localization;
+using Orchard.Logging;
 using Orchard.Security;
 using Orchard.Services;
 using Orchard.Users.Models;
@@ -29,6 +30,7 @@ namespace Outercurve.Projects.Drivers
         private readonly ITransactionManager _transaction;
         private readonly IClock _clock;
         private readonly ICLATemplateService _templateService;
+        public ILogger Logger;
         private const string TemplateName = "Parts/CLA";
         public Localizer T;
 
@@ -37,8 +39,9 @@ namespace Outercurve.Projects.Drivers
             get { return "CLA"; }
         }
 
-        public CLAPartDriver(ICLAPartService claService, IContentManager contentManager, IUTCifierService utcService, 
-            IMembershipService membershipService, ITransactionManager transaction, IClock clock, ICLATemplateService templateService ) {
+        public CLAPartDriver(ICLAPartService claService, IContentManager contentManager, IUTCifierService utcService,
+            IMembershipService membershipService, ITransactionManager transaction, IClock clock, ICLATemplateService templateService)
+        {
             _claService = claService;
             _contentManager = contentManager;
 
@@ -47,23 +50,32 @@ namespace Outercurve.Projects.Drivers
             _transaction = transaction;
             _clock = clock;
             _templateService = templateService;
+            Logger = NullLogger.Instance;
 
             T = NullLocalizer.Instance;
         }
 
         protected override DriverResult Display(CLAPart part, string displayType, dynamic shapeHelper) {
-            return ContentShape("Parts_CLA", () => shapeHelper.Parts_CLA(
-                ContentItem:part.ContentItem,
-                ContentPart: part,
-                IsValid: part.IsValid,
-                ProjectPart: part.As<CommonPart>().Container,
-                Project: part.As<CommonPart>().Container.As<TitlePart>().Title,
-                CLASigner: part.CLASigner.FullName(),
-                ValidDate: part.SignedDate,
-                FoundationSigner: part.FoundationSigner == null ? "-" : part.FoundationSigner.FullName()
-                ));
+            try {
+                
 
-            
+
+                return ContentShape("Parts_CLA", () => shapeHelper.Parts_CLA(
+                    ContentItem: part.ContentItem,
+                    ContentPart: part,
+                    IsValid: part.IsValid,
+                    ProjectPart: part.As<CommonPart>().Container,
+                    Project: part.As<CommonPart>().Container.As<TitlePart>().Title,
+                    CLASigner: part.CLASigner.FullName(),
+                    ValidDate: part.SignedDate,
+                    FoundationSigner: part.FoundationSigner == null ? "-" : part.FoundationSigner.FullName()
+                                                           ));
+            }
+            catch (Exception e) {
+                Logger.Error(e, "Failure in CLAPart");
+                throw e;
+            }
+
         }
 
         protected override DriverResult Editor(CLAPart part, dynamic shapeHelper) {
@@ -121,9 +133,7 @@ namespace Outercurve.Projects.Drivers
 
           
 
-            var allTemplatesIdVersionAndNiceName =
-                _contentManager.Query(VersionOptions.AllVersions, "CLATemplate").
-                                List().Select(i => new KeyValuePair<string, string>(_templateService.CreateCLATemplateIdVersion(i), i.As<CLATemplatePart>().CLATitle + ", v" + i.Version));
+            
                 
 
             var vm = new EditCLAViewModel {
@@ -145,11 +155,7 @@ namespace Outercurve.Projects.Drivers
                 NeedCompanySignature = part.RequiresEmployerSigner,
                 StaffOverride = part.OfficeValidOverride,
                 LocationOfCLA = part.LocationOfCLA,
-                SelectedTemplate = _templateService.CreateCLATemplateIdVersion(selectedTemplate),
-                Template = new TemplateDetailViewModel {
-                    CurrentHtmlForTemplate = new Markdown().Transform(selectedTemplate.As<CLATemplatePart>().CLA),
-                    TemplateNameVersionsAndIds = allTemplatesIdVersionAndNiceName
-                }
+               SelectedTemplate = _templateService.CreateCLATemplateIdVersion(selectedTemplate)
                  
 
             };
@@ -194,13 +200,30 @@ namespace Outercurve.Projects.Drivers
             return vm;
         }
 
-        protected virtual DriverResult CreateShape(EditCLAViewModel vm, dynamic shapeHelper)
-        {
+        protected virtual DriverResult CreateShape(EditCLAViewModel vm, dynamic shapeHelper) {
+
+
+            MustSetEveryTime(vm);
+
             return ContentShape("Parts_CLA_Edit",
                                 () => shapeHelper.EditorTemplate(
                                     TemplateName: TemplateName,
                                     Model: vm,
                                     Prefix: Prefix));
+        }
+
+        private void MustSetEveryTime(EditCLAViewModel vm) {
+
+            var selectedTemplate = _templateService.GetCLATemplateFromIdVersion(vm.SelectedTemplate);
+
+            var allTemplatesIdVersionAndNiceName =
+                _contentManager.Query(VersionOptions.AllVersions, "CLATemplate").
+                                List().Select(i => new KeyValuePair<string, string>(_templateService.CreateCLATemplateIdVersion(i), i.As<CLATemplatePart>().CLATitle + ", v" + i.Version));
+
+            vm.Template = new TemplateDetailViewModel {
+                CurrentHtmlForTemplate = new Markdown().Transform(selectedTemplate.As<CLATemplatePart>().CLA),
+                TemplateNameVersionsAndIds = allTemplatesIdVersionAndNiceName
+            };
         }
 
         #region Import/Export

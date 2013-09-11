@@ -3,14 +3,18 @@
 @{
     Layout.Title = Model.Name;
 }
-
-    <table class="table">
+<div class="page-header">
+    <h2>Contributors to @Model.Name</h2>
+</div>
+<p>To contribute significant code to @Model.Name, you must sign a CLA. To get started, email 
+    @Html.Link("contributions@outercurve.org", String.Format("mailto:contributions@outercurve.org?subject=New%20Contributor%20to%20{0}", Model.Name))</p>
+<table class="table">
         <thead>
             <tr>
             <th>Last Name</th>
             <th>First Name</th>
             <th>Is Valid</th>
-            <th>Valid From</th>
+        
              </tr>
         </thead>
         @foreach (var i in Model.Items) {
@@ -28,14 +32,7 @@
                         <i class="icon-ok" />
                     }
                 </td>
-                <td>
-                    @if (i.IsValid) {
-                        @i.ValidFrom
-                    }
-                    else {
-                       @:-
-                    }
-                </td>
+               
             </tr>
         }
     </table>

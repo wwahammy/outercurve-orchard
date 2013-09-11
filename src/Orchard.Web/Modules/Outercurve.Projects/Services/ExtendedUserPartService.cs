@@ -60,7 +60,7 @@ namespace Outercurve.Projects.Services
        
         public IEnumerable<SelectListEntry> GetExtendedUserListEntries() {
             var users = _contentManager.Query("User").List();
-            return users.Select(u => new SelectListEntry {Id = u.As<UserPart>().NormalizedUserName, Name = GetFullName(u)});
+            return users.Select(u => new SelectListEntry {Id = u.As<UserPart>().NormalizedUserName, Name = GetFullName(u)}).OrderBy(s => s.Name);
         }
 
         public string GetFullName(IUser u) {
@@ -74,6 +74,7 @@ namespace Outercurve.Projects.Services
         public string GetFullName(ContentItem u) {
             return String.IsNullOrWhiteSpace(u.As<ExtendedUserPart>().FullName) ? u.As<UserPart>().NormalizedUserName : u.As<ExtendedUserPart>().FullName;
         }
+
 
         public void UpdateItemWithExtendedUserInfo(ContentItem item, EditExtendedUserViewModel model) {
             var part = item.As<ExtendedUserPart>();

@@ -6,7 +6,9 @@
   <PropertyGroup>
     <LibFolder>$(MSBuildProjectDirectory)\lib</LibFolder>
     <SrcFolder>$(MSBuildProjectDirectory)\src</SrcFolder>
+	
     <BuildFolder>$(MSBuildProjectDirectory)\build</BuildFolder>
+	<PrecompileCleanFolders>$(BuildFolder)\Precompiled;$(BuildFolder)\Compile;$(BuildFolder)\Stage</PrecompileCleanFolders>
     <MsBuildTasksFolder>$(MSBuildProjectDirectory)\buildtasks</MsBuildTasksFolder>
     <ArtifactsFolder>$(MSBuildProjectDirectory)\artifacts</ArtifactsFolder>
     <SqlCeFolder>$(MSBuildProjectDirectory)\lib\sqlce</SqlCeFolder>
@@ -105,7 +107,7 @@
 
   <Target Name="Clean">
     <MSBuild Projects="$(SrcFolder)\Orchard.sln" Targets="Clean" />
-    <RemoveDir Directories="$(BuildFolder)" ContinueOnError="true"/>
+    <RemoveDir Directories="$(PrecompileCleanFolders)" ContinueOnError="true"/>
     <RemoveDir Directories="$(ArtifactsFolder)" />
   </Target>
 

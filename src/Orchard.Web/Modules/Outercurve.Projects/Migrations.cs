@@ -1,15 +1,26 @@
 using System.Data;
+using System.Linq;
 using Orchard.ContentManagement.MetaData;
+using Orchard.ContentManagement.Records;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Containers.Models;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Core.Title.Models;
+using Orchard.Data;
 using Orchard.Data.Migration;
 using Orchard.Users.Models;
 using Outercurve.Projects.Models;
+using Outercurve.Projects.MoreLinq;
 
 namespace Outercurve.Projects {
     public class Migrations : DataMigrationImpl {
+        private readonly IRepository<ProjectPartRecord> _projectRepository;
+        private readonly IRepository<ContentItemVersionRecord> _contentItemVersionRepository;
+
+        public Migrations(IRepository<ProjectPartRecord> projectRepository, IRepository<ContentItemVersionRecord>  contentItemVersionRepository) {
+            _projectRepository = projectRepository;
+            _contentItemVersionRepository = contentItemVersionRepository;
+        }
 
         public int Create() {
             SchemaBuilder.CreateTable("ContentMultipleLeaderUserRecord", table => table
@@ -101,5 +112,28 @@ namespace Outercurve.Projects {
 
             return 1;
         }
+
+       
+/*       
+        public int UpdateFrom1() {
+
+            var existingProjects = _projectRepository.Table.Select(p => p.Id);
+            
+             var result = (from p in existingProjects
+                          from i in _contentItemVersionRepository.Table
+                          group i by i.ContentItemRecord.Id == p into g
+                          select g).Select(g => g.MaxBy(i))
+                          
+
+
+            foreach (var p in existingProjects) {
+                _contentItemVersionRepository.Table    
+            }
+            var versionRecords = 
+
+            
+            SchemaBuilder.AlterTable("ProjectPartRecord", a => a.AddColumn(""))
+            return 2;
+        }*/
     }
 }

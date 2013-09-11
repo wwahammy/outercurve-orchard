@@ -19,6 +19,24 @@ namespace Outercurve.Projects
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
+
+                new RouteDescriptor {
+                   
+                    Priority = 100000,
+                    Route = new Route("", new RouteValueDictionary {
+                        {"area", "Outercurve.Projects"},
+                        {"controller", "Index"},
+                        {"action", "Index"}
+                    },
+                    new RouteValueDictionary(),
+                    new RouteValueDictionary {
+                        {"area", "Outercurve.Projects"}
+                    },
+                        
+                    new MvcRouteHandler()
+                )
+
+                },
                 new RouteDescriptor {
                     Route = new Route(
                         "CLA/{action}",
