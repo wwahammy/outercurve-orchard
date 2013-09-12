@@ -125,11 +125,11 @@ namespace Outercurve.Projects.Drivers
         private EditCLAViewModel BuildEditorViewModel(CLAPart part) {
 
            //var templateIdVersion = _templateService.CreateCLATemplateIdVersion(part.CLATemplate);
-            var selectedTemplate = part.CLATemplate;
+          /*  var selectedTemplate = part.CLATemplate;
 
             if (part.CLATemplate == null) {
                 selectedTemplate = _contentManager.Query("CLATemplate").List().First();
-            }
+            }*/
 
           
 
@@ -155,7 +155,7 @@ namespace Outercurve.Projects.Drivers
                 NeedCompanySignature = part.RequiresEmployerSigner,
                 StaffOverride = part.OfficeValidOverride,
                 LocationOfCLA = part.LocationOfCLA,
-               SelectedTemplate = _templateService.CreateCLATemplateIdVersion(selectedTemplate)
+               // SelectedTemplate = _templateService.CreateCLATemplateIdVersion(selectedTemplate)
                  
 
             };
@@ -203,7 +203,7 @@ namespace Outercurve.Projects.Drivers
         protected virtual DriverResult CreateShape(EditCLAViewModel vm, dynamic shapeHelper) {
 
 
-            MustSetEveryTime(vm);
+            
 
             return ContentShape("Parts_CLA_Edit",
                                 () => shapeHelper.EditorTemplate(
@@ -212,19 +212,6 @@ namespace Outercurve.Projects.Drivers
                                     Prefix: Prefix));
         }
 
-        private void MustSetEveryTime(EditCLAViewModel vm) {
-
-            var selectedTemplate = _templateService.GetCLATemplateFromIdVersion(vm.SelectedTemplate);
-
-            var allTemplatesIdVersionAndNiceName =
-                _contentManager.Query(VersionOptions.AllVersions, "CLATemplate").
-                                List().Select(i => new KeyValuePair<string, string>(_templateService.CreateCLATemplateIdVersion(i), i.As<CLATemplatePart>().CLATitle + ", v" + i.Version));
-
-            vm.Template = new TemplateDetailViewModel {
-                CurrentHtmlForTemplate = new Markdown().Transform(selectedTemplate.As<CLATemplatePart>().CLA),
-                TemplateNameVersionsAndIds = allTemplatesIdVersionAndNiceName
-            };
-        }
 
         #region Import/Export
 

@@ -62,8 +62,7 @@ namespace Outercurve.Projects.Services
             part.RequiresEmployerSigner = model.NeedCompanySignature;
 
 
-            var template = _templateService.GetCLATemplateFromIdVersion(model.SelectedTemplate);
-            part.CLATemplate = template;
+       
 
             if (model.IsSignedByUser) {
                 part.SignedDate = _utcService.GetUtcFromLocalDate(model.SigningDate);

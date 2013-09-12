@@ -272,7 +272,7 @@ namespace Outercurve.Projects.Services
                 
                 CLASignerUsername = user.UserName,
                 NeedCompanySignature =  model.NeedCompanySignature,
-                SelectedTemplate = _templateService.CreateCLATemplateIdVersion(claTemplate)
+               
                 
             };
 

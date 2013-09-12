@@ -57,27 +57,15 @@ namespace Outercurve.Projects.ViewModels
         
         
 
-        public string SelectedTemplate { get; set; }
+        //public string SelectedTemplate { get; set; }
 
-        public TemplateDetailViewModel Template { get; set; }
+       // public TemplateDetailViewModel Template { get; set; }
         //public IContent CLATemplate { get; set; }
 
         public bool StaffOverride { get; set; }
 
        
     }
-
-   public class TemplateDetailViewModel {
-
-   
-
-       
-       public string CurrentHtmlForTemplate { get; set; }
-       /// <summary>
-       /// Of the format {TemplateId_TemplateVersion, "*Nice Template Name*, v *TemplateVersion*"}
-       /// </summary>
-       public IEnumerable<KeyValuePair<string, string>> TemplateNameVersionsAndIds { get; set; }
-   }
 
     
 }
