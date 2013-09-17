@@ -343,8 +343,8 @@ namespace Outercurve.Projects.Controllers
 
             var claPart = cla.As<CLAPart>();
             var project = cla.As<CommonPart>().Container.As<TitlePart>();
-
-            var actualCLAText = claPart.CLATemplate;
+            var actualCLAText = cla.As<CLATextPart>().CLATemplate;
+            //var actualCLAText = claPart.CLATemplate;
 
             var model = new SignCompanyViewModel {
                 CLAId =  cla.Id,

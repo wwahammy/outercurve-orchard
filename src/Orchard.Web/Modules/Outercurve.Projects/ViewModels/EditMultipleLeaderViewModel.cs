@@ -3,24 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Orchard.Users.ViewModels;
 using Outercurve.Projects.Models;
 
 namespace Outercurve.Projects.ViewModels
 {
+    [Bind(Exclude = "UsernamesToNiceNames")]
     public class EditMultipleLeaderViewModel
     {
         public EditMultipleLeaderViewModel() {
-            UsernamesForLeadersSelected = new List<MultipleLeaderRowViewModel>();
+            SelectedUsernames = new List<string>();
         }
 
         [MinLength(1, ErrorMessage="You need at least one leader")]
-        public IList<MultipleLeaderRowViewModel> UsernamesForLeadersSelected { get; set; }
+        public IList<string> SelectedUsernames { get; set; }
+
+        public IEnumerable<KeyValuePair<string,string>> UsernamesToNiceNames { get; set; }
     }
 
-    public class MultipleLeaderRowItem {
-        public string Title { get; set; }
-        public string Id { get; set; }
-    }
+   
   
 }

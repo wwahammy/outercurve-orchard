@@ -1,7 +1,10 @@
+using System;
 using System.Data;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using DocumentFormat.OpenXml.CustomXmlSchemaReferences;
+using DocumentFormat.OpenXml.Office.CustomUI;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.Records;
 using Orchard.Core.Common.Models;
@@ -14,24 +17,30 @@ using Orchard.Users.Models;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.MoreLinq;
 
-namespace Outercurve.Projects {
-    public class Migrations : DataMigrationImpl {
+namespace Outercurve.Projects
+{
+    public class Migrations : DataMigrationImpl
+    {
         private readonly IRepository<ProjectPartRecord> _projectRepository;
         private readonly IRepository<ContentItemVersionRecord> _contentItemVersionRepository;
         private readonly IRepository<CLATextPartRecord> _claTextRepository;
         private readonly IRepository<CLAPartRecord> _claRepository;
+        private readonly IContentManager _contentManager;
 
-        public Migrations(IRepository<ProjectPartRecord> projectRepository, 
-            IRepository<ContentItemVersionRecord>  contentItemVersionRepository, 
-            IRepository<CLATextPartRecord>  claTextRepository, 
-            IRepository<CLAPartRecord> claRepository) {
+        public Migrations(IRepository<ProjectPartRecord> projectRepository,
+            IRepository<ContentItemVersionRecord> contentItemVersionRepository,
+            IRepository<CLATextPartRecord> claTextRepository,
+            IRepository<CLAPartRecord> claRepository, IContentManager contentManager)
+        {
             _projectRepository = projectRepository;
             _contentItemVersionRepository = contentItemVersionRepository;
             _claTextRepository = claTextRepository;
             _claRepository = claRepository;
+            _contentManager = contentManager;
         }
 
-        public int Create() {
+        public int Create()
+        {
             SchemaBuilder.CreateTable("ContentMultipleLeaderUserRecord", table => table
                 .Column("Id", DbType.Int32, column => column.PrimaryKey().Identity())
                 .Column("MultipleLeaderPartRecord_id", DbType.Int32)
@@ -95,51 +104,100 @@ namespace Outercurve.Projects {
                 .ContentPartRecord()
                 .Column("CLATemplate_id", DbType.Int32)
             );
-            
-           
+
+
             ContentDefinitionManager.AlterPartDefinition(typeof(MultipleLeaderPart).Name, builder => builder.Attachable());
 
 
-    
-    
-
-    ContentDefinitionManager.AlterPartDefinition(
-        typeof(CLAPart).Name, cfg => cfg.Attachable());
 
 
-    ContentDefinitionManager.AlterPartDefinition<ExtendedUserPart>( cfg => cfg.Attachable());
-    ContentDefinitionManager.AlterPartDefinition<CLATemplatePart>(cfg => cfg.Attachable());
-    ContentDefinitionManager.AlterPartDefinition<ProjectPart>(cfg => cfg.Attachable());
-    
 
-    ContentDefinitionManager.AlterTypeDefinition("Gallery", b => b.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<MultipleLeaderPart>().Draftable());
-    ContentDefinitionManager.AlterTypeDefinition("Project", cfg => cfg.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<MultipleLeaderPart>().WithPart<ProjectPart>().Draftable());
-    ContentDefinitionManager.AlterTypeDefinition("CLA", b => b.WithPart<CLAPart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Draftable());       
-    ContentDefinitionManager.AlterTypeDefinition("User", b => b.WithPart<UserPart>().WithPart<ExtendedUserPart>());
+            ContentDefinitionManager.AlterPartDefinition(
+                typeof(CLAPart).Name, cfg => cfg.Attachable());
 
-    ContentDefinitionManager.AlterTypeDefinition("CLATemplate", b => b.WithPart<CLATemplatePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Creatable());
+
+            ContentDefinitionManager.AlterPartDefinition<ExtendedUserPart>(cfg => cfg.Attachable());
+            ContentDefinitionManager.AlterPartDefinition<CLATemplatePart>(cfg => cfg.Attachable());
+            ContentDefinitionManager.AlterPartDefinition<ProjectPart>(cfg => cfg.Attachable());
+
+
+            ContentDefinitionManager.AlterTypeDefinition("Gallery", b => b.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<MultipleLeaderPart>().Draftable());
+            ContentDefinitionManager.AlterTypeDefinition("Project", cfg => cfg.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<MultipleLeaderPart>().WithPart<ProjectPart>().Draftable());
+            ContentDefinitionManager.AlterTypeDefinition("CLA", b => b.WithPart<CLAPart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Draftable());
+            ContentDefinitionManager.AlterTypeDefinition("User", b => b.WithPart<UserPart>().WithPart<ExtendedUserPart>());
+
+            ContentDefinitionManager.AlterTypeDefinition("CLATemplate", b => b.WithPart<CLATemplatePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Creatable());
 
 
             return 1;
         }
 
-       
-       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <from>http://stackoverflow.com/questions/16611692/how-to-change-inheritance-from-contentpartrecord-to-contentpartversionrecord</from>
         public int UpdateFrom1() {
-            SchemaBuilder.CreateTable("CLATextPartHandler", command => command.ContentPartVersionRecord().Column("TemplateId", DbType.Int32).Column("TemplateVersion", DbType.Int32));
+
+            //TODO!!!!!
+            SchemaBuilder.CreateTable("CLATextPartRecord", command => command.ContentPartVersionRecord().Column("TemplateId", DbType.Int32).Column("TemplateVersion", DbType.Int32));
+
 
 
             ContentDefinitionManager.AlterPartDefinition<CLATextPart>(cfg => cfg.Attachable());
             ContentDefinitionManager.AlterTypeDefinition("Project", cfg => cfg.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<MultipleLeaderPart>().WithPart<ProjectPart>().WithPart<CLATextPart>().Draftable());
             ContentDefinitionManager.AlterTypeDefinition("CLA", b => b.WithPart<CLAPart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<CLATextPart>().Draftable());
-            
-            
-            foreach (var cla in _claRepository.Table) {
-                _claTextRepository.Create(new CLATextPartRecord {Id = cla.Id, TemplateId = cla.TemplateId, TemplateVersion = cla.TemplateVersion});
+
+
+            // Manually add the column that is required for the part to be a ContentPartVersionRecord
+            try {
+                SchemaBuilder.AlterTable("CLATemplatePartRecord", table => table.AddColumn<int>("ContentItemRecord_id"));
+
+                // Get table name
+
+                var tableName = "Outercurve_Projects_CLATemplatePartRecord";
+
+// must manually drop the constraint
+
+
+            SchemaBuilder.ExecuteSql(string.Format(@"
+INSERT INTO {0}
+                         (Id, ContentItemRecord_id, CLATitle, CLA)
+SELECT        t3.Id AS id, t2.Id AS ContentItemRecord_id, t2.CLATitle, t2.CLATitle
+FROM            {0} AS t2 LEFT OUTER JOIN
+                         Orchard_Framework_ContentItemVersionRecord AS t3 ON t2.Id = t3.ContentItemRecord_id
+WHERE        (t3.Latest = 1) AND (NOT (t3.Id IS NULL))
+", tableName));
+
+            SchemaBuilder.ExecuteSql(string.Format(@"
+DELETE FROM {0}
+WHERE ContentItemRecord_id is NULL
+", tableName));
+
+            SchemaBuilder.ExecuteSql(String.Format(@"
+ALTER TABLE {0}
+ADD CONSTRAINT PK_{0}_ID PRIMARY KEY (Id)
+", tableName));
+
+
+            }
+            catch  {
+                
             }
 
-            foreach (var proj in _projectRepository.Table) {
-                _claTextRepository.Create(new CLATextPartRecord {Id = proj.Id, TemplateId = proj.CLATemplate.ContentItemVersionRecord.ContentItemRecord.Id, TemplateVersion = proj.CLATemplate.ContentItemVersionRecord.Number});
+            foreach (var cla in _contentManager.Query("CLA").List())
+            {
+
+                var claPart = cla.As<CLAPart>();
+                cla.As<CLATextPart>().CLATemplate = claPart.CLATemplate;
+
+            }
+
+            foreach (var proj in _contentManager.Query("Project").List())
+            {
+                var projPart = proj.As<ProjectPart>();
+                proj.As<CLATextPart>().CLATemplate = _contentManager.Get(projPart.CLATemplate.Id, VersionOptions.Latest);
             }
 
             return 2;

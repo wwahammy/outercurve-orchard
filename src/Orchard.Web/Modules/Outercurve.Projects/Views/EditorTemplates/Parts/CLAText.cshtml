@@ -30,7 +30,7 @@
 }
 
 
-<div class="row" class="clatext-editor">
+<div class="row clatext-editor">
     <div class="page-header"><h3>License Agreement</h3></div>
     <div class="control-group">
                 
@@ -65,7 +65,7 @@
 //<![CDATA[
         $(function() {
 
-            var vm = function(idVersionToHtmlDictionary, selectedTemplateId) {
+            var ViewModel = function(idVersionToHtmlDictionary, selectedTemplateId) {
                 var self = this;
                 /* get version and html */
                 self.idVersionToDictionary = ko.observableDictionary(idVersionToHtmlDictionary);
@@ -85,8 +85,8 @@
             var idVersionToHtmlDictionaryMap = @CreateValues(Model.SelectedTemplate, Model.TemplateInfo.CurrentHtmlForTemplate, Model.TemplateInfo.TemplateNameVersionsAndIds.Select(i => i.Key));
 
             var selectedTemplateId = "@Model.SelectedTemplate";
-
-            ko.applyBindings(vm, $('.clatext-editor')[0]);
+            var ourVm = new ViewModel(idVersionToHtmlDictionaryMap, selectedTemplateId);
+            ko.applyBindings(ourVm, $('.clatext-editor')[0]);
         });
 //]]>
 </script>

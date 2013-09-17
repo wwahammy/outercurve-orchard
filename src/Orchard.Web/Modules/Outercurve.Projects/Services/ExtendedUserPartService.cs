@@ -26,6 +26,7 @@ namespace Outercurve.Projects.Services
        
         IUser CreateAutoRegisteredUser(string email, string firstName, string lastName);
         IEnumerable<ExtendedUserEntry>  GetSortedExtendedUserEntries();
+        IEnumerable<KeyValuePair<string, string>> GetSortedUserNameToFullName();
         IEnumerable<SelectListEntry> GetExtendedUserListEntries();
         string GetFullName(ContentPartRecord r);
         string GetFullName(ContentItem u);
@@ -57,10 +58,12 @@ namespace Outercurve.Projects.Services
             _userService = userService;
         }
 
-       
-        public IEnumerable<SelectListEntry> GetExtendedUserListEntries() {
+        public IEnumerable<KeyValuePair<string, string>> GetSortedUserNameToFullName() {
             var users = _contentManager.Query("User").List();
-            return users.Select(u => new SelectListEntry {Id = u.As<UserPart>().NormalizedUserName, Name = GetFullName(u)}).OrderBy(s => s.Name);
+            return users.Select(u => new KeyValuePair<string, string>(u.As<UserPart>().NormalizedUserName, GetFullName(u))).OrderBy(i => i.Key);
+        }
+        public IEnumerable<SelectListEntry> GetExtendedUserListEntries() {
+            return GetSortedUserNameToFullName().Select(u => new SelectListEntry {Id = u.Key, Name = u.Value}); 
         }
 
         public string GetFullName(IUser u) {

@@ -127,7 +127,7 @@ namespace Outercurve.Projects.Models
         
         }
 
-
+        [Obsolete]
         public IContent CLATemplate {
             get { return CLATemplateField.Value; }
             set { CLATemplateField.Value = value; }

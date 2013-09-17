@@ -47,63 +47,32 @@ namespace Outercurve.Projects.Drivers
                     return Editor(part, shapeHelper);
                 }
             }
-
+            
             return CreateShape(model, shapeHelper);
         }
 
 
         private DriverResult CreateShape(EditMultipleLeaderViewModel vm, dynamic shapeHelper) {
+            MustSetEveryTime(vm);
             return ContentShape("Parts_MultipleLeader_Edit", () => shapeHelper.EditorTemplate(
                 TemplateName: TemplateName,
                 Model: vm,
                 Prefix: Prefix));
         }
 
+        private void MustSetEveryTime(EditMultipleLeaderViewModel vm) {
+            vm.UsernamesToNiceNames = _extUserService.GetSortedUserNameToFullName().ToList();
+        }
+
         private EditMultipleLeaderViewModel BuildEditorViewModel(MultipleLeaderPart part) {
             var model = new EditMultipleLeaderViewModel {
-                UsernamesForLeadersSelected = part.Leaders.Select(i => new MultipleLeaderRowViewModel{ SelectedUserName = i.UserName}).ToList()
+                SelectedUsernames = part.Leaders.Select(i => i.UserName).ToList()
+                
             };
 
             return model;
         }
 
-        protected override void Importing(MultipleLeaderPart part, Orchard.ContentManagement.Handlers.ImportContentContext context) {
-           var element = context.Data.Element(part.PartDefinition.Name);
-
-            foreach (var owner in element.Element("Owners").Elements("Owner")) {
-                var id = owner.Attr("id");
-                var contentIdentity = new ContentIdentity(id);
-                var i = new ContentMultipleLeaderUserRecord 
-                {
-                    MultipleLeaderPartRecord = part.Record,
-                    
-                    UserPartRecord = _membershipService.GetUser(contentIdentity.Get("User.Username")).ContentItem.As<UserPart>().Record
-                };
-                
-                
-                part.Record.Owners.Add(i);
-            }
-            
-
-           
-        }
-
-        protected override void Exporting(MultipleLeaderPart part, Orchard.ContentManagement.Handlers.ExportContentContext context)
-        {
-           
-
-            XElement children = new XElement("Owners");
-            foreach (var rec in  part.Leaders.Select(l => _contentManager.Get(l.Id))) {
-                var owner = new XElement("Owner");
-                
-                var ownerId = _contentManager.GetItemMetadata(rec).Identity;
-                owner.Attr("Id", ownerId.ToString());
-                children.Add(owner);
-            }
-
-            context.Element(part.PartDefinition.Name).Add(children);
-
-
-        }
+       
     }
 }
