@@ -16,6 +16,7 @@ namespace Outercurve.Projects
             manifest.DefineScript("listEditor").SetUrl("listEditor.js").SetDependencies("jQuery");
             manifest.DefineStyle("bootstrap-datetime").SetUrl("bootstrap-datetimepicker.min.css");
             manifest.DefineScript("bootstrap-datetime").SetUrl("bootstrap-datetimepicker.min.js").SetDependencies("jQuery");
+            manifest.DefineStyle("local").SetUrl("local.css");
             //manifest.DefineScript("CLA").SetUrl("CLA.js").SetDependencies("jQuery", "jQuery_LinqJs", "ko");
         }
     }
