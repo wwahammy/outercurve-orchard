@@ -12,8 +12,8 @@
     //Style.Require("Common_DatePicker");
   
   //  Style.Require("bootstrap-datetime").AtLocation(ResourceLocation.Foot);
-  
 
+    Style.Require("local");
 }
 
      
@@ -35,7 +35,7 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerFirstName, T("First Name"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.CLASignerFirstName)
+                    @Html.ControlTextBoxFor(m => m.CLASignerFirstName)
                     @Html.ControlValidationMessageFor(m => m.CLASignerFirstName, null)
                 </div>
             </div>
@@ -43,7 +43,7 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerLastName, T("Last Name"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.CLASignerLastName)
+                    @Html.ControlTextBoxFor(m => m.CLASignerLastName)
                     @Html.ControlValidationMessageFor(m => m.CLASignerLastName, null)
                 </div>
             </div>
@@ -51,42 +51,42 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerEmail, T("Email"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.CLASignerEmail)
+                    @Html.ControlTextBoxFor(m => m.CLASignerEmail)
                     @Html.ControlValidationMessageFor(m => m.CLASignerEmail, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Address1, T("Address1"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Address1)
+                    @Html.ControlTextBoxFor(m => m.Address1)
                     @Html.ControlValidationMessageFor(m => m.Address1, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Address2, T("Address2"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Address2)
+                    @Html.ControlTextBoxFor(m => m.Address2)
                     @Html.ControlValidationMessageFor(m => m.Address2, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.City, T("City"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.City)
+                    @Html.ControlTextBoxFor(m => m.City)
                     @Html.ControlValidationMessageFor(m => m.City, null)
                 </div>
             </div>
             <div class="control-group">
-                @Html.ControlLabelFor(m => m.State, T("State'Province"))
+                @Html.ControlLabelFor(m => m.State, T("State/Province"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.State)
+                    @Html.ControlTextBoxFor(m => m.State)
                     @Html.ControlValidationMessageFor(m => m.State, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.ZipCode, T("Postal Code"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ZipCode)
+                    @Html.ControlTextBoxFor(m => m.ZipCode)
                     @Html.ControlValidationMessageFor(m => m.ZipCode, null)
                 </div>
             </div>
@@ -94,14 +94,14 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Country, T("Country"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Country)
+                    @Html.ControlTextBoxFor(m => m.Country)
                     @Html.ControlValidationMessageFor(m => m.Country, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Employer, T("Employer"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Employer)
+                    @Html.ControlTextBoxFor(m => m.Employer)
                     @Html.ControlValidationMessageFor(m => m.Employer, null)
                 </div>
             </div>
@@ -119,7 +119,7 @@
                     @Html.ControlLabelFor(m => m.SigningDate, T("Signed By User On:") )
                     <div class="input-append date">
                         
-                            @Html.TextBoxFor(m => m.SigningDate)
+                            @Html.ControlTextBoxFor(m => m.SigningDate)
                             <span class="add-on">
                                 <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
                             </span>
@@ -160,14 +160,14 @@
                 <div class="control-group">
                     @Html.ControlLabelFor(m => m.CompanySigner, T("Company Signer"))
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.CompanySigner)
+                        @Html.ControlTextBoxFor(m => m.CompanySigner)
                         @Html.ControlValidationMessageFor(m => m.CompanySigner, null)
                     </div>
                 </div>
                 <div class="control-group">
                     @Html.ControlLabelFor(m => m.CompanySignerEmail, T("Company Signer Email"))
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.CompanySignerEmail)
+                        @Html.ControlTextBoxFor(m => m.CompanySignerEmail)
                         @Html.ControlValidationMessageFor(m => m.CompanySignerEmail, null)
                     </div>
                 </div>
@@ -280,17 +280,6 @@
     <script type="text/javascript">
 //<![CDATA[
         $(function () {
-          
-        /*  
-            $('#Html.FieldIdFor(m => m.SigningDate)').datetimepicker({
-                format: 'MM/dd/yyyy',
-                pickDate: true,
-                pickTime: false
-            });*/
-         
-            
-
-
             ko.bindingHandlers.goEnable = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                     if (valueAccessor()) {
@@ -315,7 +304,7 @@
                 }
             };
 
-            var ViewModel = function(signed, foundationSigner, employerSigner, needsCompanySignature,) {
+            var ViewModel = function(signed, foundationSigner, employerSigner, needsCompanySignature) {
                 var self = this;
                 /* visibility */
                 self.isSigned = ko.observable(signed);
