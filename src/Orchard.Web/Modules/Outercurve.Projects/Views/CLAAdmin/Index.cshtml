@@ -6,6 +6,7 @@
     var userIndex = 0;
 
     Layout.Title = T("CLAs").ToString();
+    Style.Require("local");
 }
 
 @using (Html.BeginFormAntiForgeryPost()) {
@@ -32,9 +33,6 @@
                 <tr>
                     <td>
                         <input type="hidden" value="@Model.CLAs[userIndex].CLAItem.Id" name="@Html.NameOf(m => m.CLAs[userIndex].CLAItem.Id)"/>
-                    @*
-                        <input type="checkbox" value="true" name="@Html.NameOf(m => m.CLAs[userIndex].IsChecked)"/>
-                        *@
                     </td>
                     <td>
                         @entry.SignedDate
@@ -53,11 +51,9 @@
                     </td>
                     <td>
                         @if (entry.IsActive) {
-                            <input type="checkbox" checked disabled/>
+                            <i class="icon-ok" />
                         }
-                        else {
-                            <input type="checkbox" disabled/>
-                        }
+                       
                    </td>
                     <td>
                         @Html.ItemDisplayLink(T("View").Text, entry.CLAItem)

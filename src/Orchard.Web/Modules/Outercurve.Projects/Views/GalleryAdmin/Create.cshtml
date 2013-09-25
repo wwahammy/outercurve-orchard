@@ -1,6 +1,6 @@
 ﻿
 
-@{ Layout.Title = T("Create Gallery").ToString(); }
+@{ Layout.Title = T("Create Gallery").ToString(); Style.Require("local");}
 
 @using (Html.BeginFormAntiForgeryPost()) { 
     @Html.ValidationSummary() 
