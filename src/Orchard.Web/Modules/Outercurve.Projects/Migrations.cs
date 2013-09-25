@@ -105,10 +105,12 @@ namespace Outercurve.Projects
                 .Column("CLATemplate_id", DbType.Int32)
             );
 
+            SchemaBuilder.CreateTable("CLATextPartRecord", command => command.ContentPartVersionRecord().Column("TemplateId", DbType.Int32).Column("TemplateVersion", DbType.Int32));
+
 
             ContentDefinitionManager.AlterPartDefinition(typeof(MultipleLeaderPart).Name, builder => builder.Attachable());
 
-
+            ContentDefinitionManager.AlterPartDefinition<CLATextPart>(cfg => cfg.Attachable());
 
 
 
@@ -122,8 +124,8 @@ namespace Outercurve.Projects
 
 
             ContentDefinitionManager.AlterTypeDefinition("Gallery", b => b.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<MultipleLeaderPart>().Draftable());
-            ContentDefinitionManager.AlterTypeDefinition("Project", cfg => cfg.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<MultipleLeaderPart>().WithPart<ProjectPart>().Draftable());
-            ContentDefinitionManager.AlterTypeDefinition("CLA", b => b.WithPart<CLAPart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Draftable());
+            ContentDefinitionManager.AlterTypeDefinition("Project", cfg => cfg.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<MultipleLeaderPart>().WithPart<ProjectPart>().Draftable().WithPart<CLATextPart>());
+            ContentDefinitionManager.AlterTypeDefinition("CLA", b => b.WithPart<CLAPart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Draftable().WithPart<CLATextPart>());
             ContentDefinitionManager.AlterTypeDefinition("User", b => b.WithPart<UserPart>().WithPart<ExtendedUserPart>());
 
             ContentDefinitionManager.AlterTypeDefinition("CLATemplate", b => b.WithPart<CLATemplatePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Creatable());
@@ -132,7 +134,7 @@ namespace Outercurve.Projects
             return 1;
         }
 
-
+#if false
         /// <summary>
         /// 
         /// </summary>
@@ -181,26 +183,30 @@ ADD CONSTRAINT PK_{0}_ID PRIMARY KEY (Id)
 ", tableName));
 
 
-            }
-            catch  {
-                
-            }
+            
 
-            foreach (var cla in _contentManager.Query("CLA").List())
+                foreach (var cla in _contentManager.Query("CLA").List())
+                {
+               
+                    dynamic claPart = cla.As<CLAPart>();
+                    cla.As<CLATextPart>().CLATemplate = claPart.CLATemplate;
+
+                }
+
+                foreach (var proj in _contentManager.Query("Project").List())
+                {
+                    var projPart = proj.As<ProjectPart>();
+                    proj.As<CLATextPart>().CLATemplate = _contentManager.Get(projPart.CLATemplate.Id, VersionOptions.Latest);
+                }
+
+            }
+            catch
             {
 
-                var claPart = cla.As<CLAPart>();
-                cla.As<CLATextPart>().CLATemplate = claPart.CLATemplate;
-
-            }
-
-            foreach (var proj in _contentManager.Query("Project").List())
-            {
-                var projPart = proj.As<ProjectPart>();
-                proj.As<CLATextPart>().CLATemplate = _contentManager.Get(projPart.CLATemplate.Id, VersionOptions.Latest);
             }
 
             return 2;
         }
+#endif
     }
 }
