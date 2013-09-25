@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -23,11 +25,12 @@ namespace Outercurve.Projects.Helpers
         }
 
 
-        public static IHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, LocalizedString labelText, object htmlAttributes = null) {
+        public static MvcHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, LocalizedString labelText, object htmlAttributes = null)
+        {
             return html.LabelFor(expression, labelText.ToString(), htmlAttributes);
         }
 
-        public static IHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string labelText, object htmlAttributes = null)
+        public static MvcHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string labelText, object htmlAttributes = null)
         {
             if (String.IsNullOrEmpty(labelText))
             {
@@ -43,17 +46,18 @@ namespace Outercurve.Projects.Helpers
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
 
-        public static IHtmlString ControlLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, LocalizedString labelText) {
-            return LabelFor(html, expression, labelText, new {@class = "control-label"});
+        public static MvcHtmlString ControlLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, LocalizedString labelText)
+        {
+            return ControlLabelFor(html, expression, labelText, null);
         }
 
 
-        public static IHtmlString ControlLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, LocalizedString labelText, object htmlAttributes) {
+        public static MvcHtmlString ControlLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, LocalizedString labelText, object htmlAttributes) {
             return ControlLabelFor(html, expression, labelText.ToString(), htmlAttributes);
 
         }
 
-        public static IHtmlString ControlLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string labelText, object htmlAttributes)
+        public static MvcHtmlString ControlLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string labelText, object htmlAttributes)
         {
             if (String.IsNullOrEmpty(labelText))
             {
@@ -61,21 +65,42 @@ namespace Outercurve.Projects.Helpers
             }
 
             var htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+            var isRequired = html.IsRequired(expression);
             var tag = new TagBuilder("label");
             tag.Attributes.Add("for", html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
-            tag.SetInnerText(labelText);
+            
+            
             if (htmlAttributes != null)
             {
                 tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
             }
-            tag.MergeAttribute("class", "control-label");
-            
+
+            if (isRequired) {
+                tag.SetInnerText(labelText + " *");
+                tag.MergeAttribute("class", "control-label for-required-field");
+            }
+            else {
+                tag.SetInnerText(labelText);
+                tag.MergeAttribute("class", "control-label");
+            }
+
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
             
         }
 
-        public static IHtmlString ControlValidationMessageFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string validationMessage) {
+        public static MvcHtmlString ControlValidationMessageFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string validationMessage) {
             return html.ValidationMessageFor(expression, validationMessage, new {@class = "help-inline"});
+        }
+
+
+        public static MvcHtmlString ControlTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression) {
+            IDictionary<string,object> attributes = new Dictionary<string, object>();
+            
+            if (html.IsRequired(expression)) {
+                attributes["required"] = "required";
+            }
+
+            return html.TextBoxFor(expression, attributes);
         }
     }
 }
