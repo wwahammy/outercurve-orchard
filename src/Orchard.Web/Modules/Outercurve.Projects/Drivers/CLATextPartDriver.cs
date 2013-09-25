@@ -22,10 +22,11 @@ namespace Outercurve.Projects.Drivers
         private const string TemplateName = "Parts/CLAText";
         public Localizer T;
 
-        public CLATextPartDriver(ICLATemplateService templateService, IContentManager contentManager, ICLATextPartService claTextPartService) {
+        public CLATextPartDriver(ICLATemplateService templateService, IContentManager contentManager, ICLATextPartService claTextPartService, ITransactionManager transaction) {
             _templateService = templateService;
             _contentManager = contentManager;
             _claTextPartService = claTextPartService;
+            _transaction = transaction;
         }
 
         protected override string Prefix
@@ -81,28 +82,34 @@ namespace Outercurve.Projects.Drivers
         
 
         private EditCLATextViewModel BuildEditorViewModel(CLATextPart part) {
-            var selectedTemplate = part.CLATemplate ?? _contentManager.Query("CLATemplate").List().First();
+            var selectedTemplate = part.CLATemplate ?? _contentManager.Query("CLATemplate").List().FirstOrDefault();
+            EditCLATextViewModel vm;
+            if (selectedTemplate == null) {
+                vm = new EditCLATextViewModel {TemplateDoesntExist = true};
+            }
+            else {
+                vm = new EditCLATextViewModel {
+                    SelectedTemplate = _templateService.CreateCLATemplateIdVersion(selectedTemplate)
+                };
+            }
 
-            var vm = new EditCLATextViewModel {
-                SelectedTemplate = _templateService.CreateCLATemplateIdVersion(selectedTemplate)
-            };
 
             return vm;
         }
 
         private void MustSetEveryTime(EditCLATextViewModel vm)
         {
+            if (!vm.TemplateDoesntExist) {
+                var selectedTemplate = _templateService.GetCLATemplateFromIdVersion(vm.SelectedTemplate);
 
-            var selectedTemplate = _templateService.GetCLATemplateFromIdVersion(vm.SelectedTemplate);
-
-            var allTemplatesIdVersionAndNiceName =
-                _contentManager.Query(VersionOptions.AllVersions, "CLATemplate").
-                                List().Select(i => new KeyValuePair<string, string>(_templateService.CreateCLATemplateIdVersion(i), i.As<CLATemplatePart>().CLATitle + ", v" + i.Version));
-            vm.TemplateInfo = new TemplateDetailViewModel
-            {
-                CurrentHtmlForTemplate = new Markdown().Transform(selectedTemplate.As<CLATemplatePart>().CLA),
-                TemplateNameVersionsAndIds = allTemplatesIdVersionAndNiceName
-            };
+                var allTemplatesIdVersionAndNiceName =
+                    _contentManager.Query(VersionOptions.AllVersions, "CLATemplate").
+                        List().Select(i => new KeyValuePair<string, string>(_templateService.CreateCLATemplateIdVersion(i), i.As<CLATemplatePart>().CLATitle + ", v" + i.Version));
+                vm.TemplateInfo = new TemplateDetailViewModel {
+                    CurrentHtmlForTemplate = new Markdown().Transform(selectedTemplate.As<CLATemplatePart>().CLA),
+                    TemplateNameVersionsAndIds = allTemplatesIdVersionAndNiceName
+                };
+            }
         }
     }
 }

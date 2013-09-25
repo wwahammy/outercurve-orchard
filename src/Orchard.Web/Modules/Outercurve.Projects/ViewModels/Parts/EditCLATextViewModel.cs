@@ -11,6 +11,7 @@ namespace Outercurve.Projects.ViewModels.Parts
 
         public TemplateDetailViewModel TemplateInfo { get; set; }
 
+        public bool TemplateDoesntExist { get; set; }
 
     }
 
