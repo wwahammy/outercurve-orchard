@@ -2,6 +2,9 @@
 @using Outercurve.Projects.Services
 @using ServiceStack.Text
 @model Outercurve.Projects.ViewModels.EditMultipleLeaderViewModel
+           @{
+               Style.Require("local");
+           }
 @functions {
 
     IHtmlString CreateSelectedUsers(IList<string> selectedUsers) {
@@ -18,7 +21,7 @@
 
 <div class="multipleleaders-editor">
     <h2>Leaders</h2>
-    <button data-bind="click: add">add</button>
+    <h3><button data-bind="click: add">Add Leader</button> | @Html.ActionLink("Quick Add User", "Create", new { Controller = "QuickUserAdmin", Area = "Outercurve.Projects", returnUrl = Context.Request.RawUrl }, new {@class = "button primaryAction"})</h3>
     <div data-bind="foreach: selectedUsers.items">
         <input type="hidden"  data-bind="value:key(), setName:$root.fieldPrefix +'.SelectedUsernames.index'" autocomplete="off"/>
         <div class="editorRow" >
