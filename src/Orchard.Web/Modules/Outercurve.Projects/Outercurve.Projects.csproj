@@ -110,9 +110,7 @@
     <Content Include="Scripts\listEditor.js" />
     <Content Include="Scripts\multipleLeader.js" />
     <Content Include="Styles\bootstrap-datetimepicker.min.css" />
-    <Content Include="Styles\CLAValidity.css" />
-    <Content Include="Styles\images\Green_Checkmark.png" />
-    <Content Include="Styles\images\Red_Minus.png" />
+    <Content Include="Styles\local.css" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\Web.config" />
@@ -148,7 +146,6 @@
     <Compile Include="Controllers\ContributorController.cs" />
     <Compile Include="Controllers\GalleryAdminController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
-    <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Controllers\ProjectAdminController.cs" />
     <Compile Include="Controllers\QuickUserAdminController.cs" />
     <Compile Include="Controllers\SimpleController.cs" />
@@ -197,6 +194,7 @@
     <Compile Include="Services\SelectListEntry.cs" />
     <Compile Include="Services\UTCifierService.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="ViewModels\CLAAdminIndexViewModel.cs" />
     <Compile Include="ViewModels\CLAProjectViewModel.cs" />
     <Compile Include="ViewModels\CLASigning\ChooseViewModel.cs" />
