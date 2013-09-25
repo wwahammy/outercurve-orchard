@@ -1,36 +1,48 @@
-﻿@model Outercurve.Projects.ViewModels.QuickUserViewModel
+﻿@using Outercurve.Projects.Helpers
+@model Outercurve.Projects.ViewModels.QuickUserViewModel
 
-@{ Layout.Title = T("Quick Create User").ToString(); }
+@{
+    Layout.Title = T("Quick Create User").ToString();
+    Style.Require("local");
+    
+}
 
 @using (Html.BeginFormAntiForgeryPost()) {
     @Html.ValidationSummary()
-    <fieldset>
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Email, T("Email Address"))
+    <div class="form-horizontal container-fluid"> 
+        <div class="row ">
+     
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.Email, T("Email Address"))
+                <div class="controls">
+                    @Html.ControlTextBoxFor(model => model.Email)
+                    @Html.ControlValidationMessageFor(m => m.Email, null)
+                     
+                </div>
+            </div>
+            
+            
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.FirstName, T("First Name"))
+                <div class="controls">
+                    @Html.ControlTextBoxFor(model => model.FirstName)
+                    @Html.ControlValidationMessageFor(m => m.FirstName, null)
+                     
+                </div>
+            </div>
+            
+             
+            <div class="control-group">
+                @Html.ControlLabelFor(m => m.LastName, T("Last Name"))
+                <div class="controls">
+                    @Html.ControlTextBoxFor(model => model.LastName)
+                    @Html.ControlValidationMessageFor(m => m.LastName, null)
+                     
+                </div>
+            </div>
+   
+           
+            <input type="submit" class = "button primaryAction"/>
+        </div>
     </div>
-    
-    <div class="editor-field">
-        @Html.TextBoxFor(model => model.Email)
-        @Html.ValidationMessageFor(model => model.Email)
-    </div>
-    
-    <div class="editor-label">
-        @Html.LabelFor(model => model.FirstName, T("First Name"))
-    </div>
-    
-    <div class="editor-field">
-        @Html.TextBoxFor(model => model.FirstName)
-        @Html.ValidationMessageFor(model => model.FirstName)
-    </div>
-    
-    <div class="editor-label">
-        @Html.LabelFor(model => model.LastName, T("Last Name"))
-    </div>
-    
-    <div class="editor-field">
-        @Html.TextBoxFor(model => model.LastName)
-        @Html.ValidationMessageFor(model => model.LastName)
-    </div>
-    <input type="submit" class = "button primaryAction"/>
-    </fieldset>
 }
