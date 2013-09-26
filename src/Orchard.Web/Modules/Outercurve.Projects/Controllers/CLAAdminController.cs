@@ -110,7 +110,7 @@ namespace Outercurve.Projects.Controllers
             }
 
             _services.ContentManager.Publish(cla);
-            _services.Notifier.Add(NotifyType.Information, T("The CLA was properly created."));
+            _services.Notifier.Add(NotifyType.Information, T("The Agreement was properly created."));
             return RedirectToAction("Index");
         }
 
@@ -150,7 +150,7 @@ namespace Outercurve.Projects.Controllers
 
 
             _services.ContentManager.Publish(cla);
-            _services.Notifier.Add(NotifyType.Information, T("The CLA was properly created."));
+            _services.Notifier.Add(NotifyType.Information, T("The CLA was properly edited."));
             return RedirectToAction("Index");
         }
 
