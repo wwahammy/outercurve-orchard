@@ -11,7 +11,7 @@
 
     }
 }
-
+<div class="form-horizontal container-fluid">
 @if (Model.TemplateDoesntExist) {
     <div class="page-header"><h3>License Agreement</h3></div>
     <p>No license agreement was found. Would you like to @Html.ActionLink("create one", "Create", new { id = "CLATemplate", area = "Contents", controller = "Admin"})?</p>
@@ -19,34 +19,36 @@
 else {
   
 
-<div class="row clatext-editor">
-    <div class="page-header"><h3>License Agreement</h3></div>
-    <div class="control-group">
+    <div class="row clatext-editor">
+        <div class="page-header"><h3>License Agreement</h3></div>
+        <div class="control-group">
                 
-        @{
-            var createTemplate = Model.TemplateInfo.TemplateNameVersionsAndIds.Select(
-                i =>
-                    new SelectListItem { Selected = i.Key == Model.SelectedTemplate, Text = i.Value.ToString(), Value = i.Key }).ToArray();
-        }
-        @Html.ControlLabelFor(m => m.SelectedTemplate, T("CLA"))
-        <div class="controls">
-            @Html.DropDownListFor(m => m.SelectedTemplate,
-                createTemplate,
-                new RouteValueDictionary { { "data-bind", "value: selectedTemplateId" } })
+            @{
+                var createTemplate = Model.TemplateInfo.TemplateNameVersionsAndIds.Select(
+                    i =>
+                        new SelectListItem { Selected = i.Key == Model.SelectedTemplate, Text = i.Value.ToString(), Value = i.Key }).ToArray();
+            }
+            @Html.ControlLabelFor(m => m.SelectedTemplate, T("CLA"))
+            <div class="controls">
+                @Html.DropDownListFor(m => m.SelectedTemplate,
+                    createTemplate,
+                    new RouteValueDictionary { { "data-bind", "value: selectedTemplateId" } })
                    
-            @Html.ControlValidationMessageFor(m => m.SelectedTemplate, null)
+                @Html.ControlValidationMessageFor(m => m.SelectedTemplate, null)
+            </div>
         </div>
-    </div>
                
                 
-    <div  class="control-group">
-        <div class="control-label">CLA Content</div>
-        <div class="controls" style="list-style-type: decimal">
-            <div data-bind="html: selectedTemplateHtml()" ></div>
+        <div  class="control-group">
+            <div class="control-label">CLA Content</div>
+            <div class="controls" style="list-style-type: decimal">
+                <div data-bind="html: selectedTemplateHtml()" ></div>
+            </div>
         </div>
     </div>
-</div>
+   
 
+    
 using (Script.Foot())
 {
     <script type="text/javascript">
@@ -80,4 +82,6 @@ using (Script.Foot())
 //]]>
 </script>
 }
+
 }
+     </div>
