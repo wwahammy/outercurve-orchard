@@ -18,7 +18,7 @@
     }
 
 }
-
+<div class="form-horizontal container-fluid">
 <div class="multipleleaders-editor">
     <h2>Leaders</h2>
     <h3><button data-bind="click: add">Add Leader</button> | @Html.ActionLink("Quick Add User", "Create", new { Controller = "QuickUserAdmin", Area = "Outercurve.Projects", returnUrl = Context.Request.RawUrl }, new {@class = "button primaryAction"})</h3>
@@ -38,7 +38,7 @@
        
     </div>
 </div>
-
+    </div>
 @using (Script.Foot()) {
    <script type="text/javascript">
 
