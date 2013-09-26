@@ -134,6 +134,11 @@ namespace Outercurve.Projects
             return 1;
         }
 
+
+        public int UpdateFrom1() {
+            ContentDefinitionManager.AlterTypeDefinition("CLATemplate", b => b.WithPart<CLATemplatePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Creatable(false));
+            return 2;
+        }
 #if false
         /// <summary>
         /// 
