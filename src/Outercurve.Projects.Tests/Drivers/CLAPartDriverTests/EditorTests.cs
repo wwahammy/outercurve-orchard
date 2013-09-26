@@ -1,24 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ExpectedObjects;
 using Moq;
 using Moq.Protected;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.Services;
 using Orchard.Users.Models;
-using Outercurve.Projects.Drivers;
 using Outercurve.Projects.Models;
-using Outercurve.Projects.Services;
+using Outercurve.Projects.Tests.CLAAdminControllerTests;
 using Outercurve.Projects.ViewModels;
-using Outercurve.Projects.ViewModels.Parts;
 using Proligence.Orchard.Testing;
-using SpecsFor.ShouldExtensions;
 using Xunit;
 
-namespace Outercurve.Projects.Tests.CLAAdminControllerTests
+namespace Outercurve.Projects.Tests.Drivers.CLAPartDriverTests
 {
     public class EditorTests : ClaPartDriverTestFixture {
 
