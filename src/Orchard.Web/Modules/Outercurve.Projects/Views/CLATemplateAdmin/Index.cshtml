@@ -1,0 +1,41 @@
+﻿@model Outercurve.Projects.ViewModels.CLATemplateAdmin.CLATemplateAdminIndexViewModel
+
+@{
+    var userIndex = 0;
+
+    Layout.Title = T("CLAs").ToString();
+    Style.Require("local");
+}
+
+<div class="manage">@Html.ActionLink(T("Add a new CLA").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
+
+    <fieldset>
+        <table class="items">
+            <thead>
+                <tr>
+                    <th scope="col">&nbsp;&darr;</th>
+                    <th scope="col">@T("Name")</th>
+                    <th scope="col">@T("Preview of Contents")</th>
+                    <th scope="col">@T("Actions")</th>
+                </tr>
+            </thead>
+            @foreach (var entry in Model.Templates) {
+                <tr>
+                    <td>
+                
+                    </td>
+                    <td>
+                        @entry.Name
+                    </td>
+                    <td>
+                        @entry.Text
+                    </td>
+                    <td>
+                        @Html.ActionLink(T("Edit").ToString(), "Edit", new { entry.Item.Id })
+                    </td>
+                </tr>
+                
+            }
+        </table>
+        @Display(Model.Pager)
+ </fieldset>

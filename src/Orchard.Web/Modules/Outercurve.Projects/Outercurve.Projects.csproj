@@ -143,6 +143,7 @@
     <Compile Include="Controllers\CLAAdminController.cs" />
     <Compile Include="Controllers\CLAController.cs" />
     <Compile Include="Controllers\CLASigningController.cs" />
+    <Compile Include="Controllers\CLATemplateAdminController.cs" />
     <Compile Include="Controllers\ContributorController.cs" />
     <Compile Include="Controllers\GalleryAdminController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="ViewModels\CLASigning\SignIndividualViewModel.cs" />
     <Compile Include="ViewModels\CLASigning\SigningFinishedViewModel.cs" />
     <Compile Include="ViewModels\CLASigning\StillNeedCompanyViewModel.cs" />
+    <Compile Include="ViewModels\CLATemplateAdmin\CLATemplateAdminIndexViewModel.cs" />
     <Compile Include="ViewModels\CreateCLAViewModel.cs" />
     <Compile Include="ViewModels\CreateGalleryViewModel.cs" />
     <Compile Include="ViewModels\CreateProjectViewModel.cs" />
@@ -363,6 +365,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\CLAText.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CLATemplateAdmin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CLATemplateAdmin\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CLATemplateAdmin\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
