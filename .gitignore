@@ -186,5 +186,4 @@ src/Orchard.Web/Properties/PublishProfiles
 # Sync stuff
 # ============================
 
-.SyncID
-.SyncIgnore
+.Sync*
