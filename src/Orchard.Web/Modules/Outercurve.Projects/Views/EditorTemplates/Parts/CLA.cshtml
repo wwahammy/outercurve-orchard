@@ -6,14 +6,14 @@
 @using Outercurve.Projects.Services
 
 
-@model Outercurve.Projects.ViewModels.EditCLAViewModel
+@model Outercurve.Projects.ViewModels.Parts.EditCLAViewModel
 @{
     //Script.Require("CLA");
     //Style.Require("Common_DatePicker");
   
   //  Style.Require("bootstrap-datetime").AtLocation(ResourceLocation.Foot);
 
-    Style.Require("local");
+   
 }
 
      
@@ -21,9 +21,9 @@
     <div class="row">
 
             
-             <div class="page-header">
-                    <h3 style="margin-bottom: -5px;">CLA Signer Personal Details:</h3>
-                </div>
+             
+        <div  class="page-header" ><h3>CLA Signer Personal Details:</h3></div>
+             
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerUsername, T("CLA Signing User"))
                 <div class="controls">
@@ -51,7 +51,7 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerEmail, T("Email"))
                 <div class="controls">
-                    @Html.ControlTextBoxFor(m => m.CLASignerEmail)
+                    @Html.ControlTextBoxFor(m => m.CLASignerEmail, new {type= "email"})
                     @Html.ControlValidationMessageFor(m => m.CLASignerEmail, null)
                 </div>
             </div>
@@ -117,12 +117,10 @@
                
                 <div class="control-group">
                     @Html.ControlLabelFor(m => m.SigningDate, T("Signed By User On:") )
-                    <div class="input-append date">
+                    <div class="controls">
                         
-                            @Html.ControlTextBoxFor(m => m.SigningDate)
-                            <span class="add-on">
-                                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                            </span>
+                        @Html.ControlTextBoxFor(m => m.SigningDate)
+                           
                         
                         
                         @Html.ControlValidationMessageFor(m => m.SigningDate, null)
@@ -155,7 +153,7 @@
                      
             </div>
         </div>
-        <div data-bind="visible: hasEmployerSigner" class="offset2">
+        <div data-bind="visible: showEmployerSignatureForm()" class="offset2">
             
                 <div class="control-group">
                     @Html.ControlLabelFor(m => m.CompanySigner, T("Company Signer"))
@@ -196,7 +194,7 @@
                         @Html.CheckBoxFor(m => m.HasFoundationSigner, new Dictionary<string, object> {{"data-bind","checked: hasFoundationSigner"}} )
                     </div>
                 </div>
-                <div data-bind="visible: hasFoundationSigner" class="offset1">
+                <div data-bind="visible: hasFoundationSigner()" class="offset1">
                     
                         <div class="control-group">
                             @Html.ControlLabelFor(m => m.FoundationSignerUsername, T("Foundation Signer"))
@@ -303,8 +301,13 @@
                 /* visibility */
                 self.isSigned = ko.observable(signed);
                 self.hasFoundationSigner = ko.observable(foundationSigner);
-                self.hasEmployerSigner = ko.observable(employerSigner);
                 self.needsCompanySignature = ko.observable(needsCompanySignature);
+                self.hasEmployerSigner = ko.observable(employerSigner);
+
+                self.showEmployerSignatureForm = ko.computed(function() {
+                    return self.needsCompanySignature() && self.hasEmployerSigner();
+                });
+                
                 self.isValidEnabled = ko.computed(function() {
                     return self.isSigned() && self.hasFoundationSigner();
                 });

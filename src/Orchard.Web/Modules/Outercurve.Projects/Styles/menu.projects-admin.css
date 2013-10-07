@@ -1,0 +1,14 @@
+﻿label.for-required-field {
+    font-weight: bold;
+}
+
+#main div.page-header {
+    
+    margin-bottom: 10px;
+}
+
+#main div.page-header h3{
+    line-height: 1em;
+    margin: 0;
+
+}

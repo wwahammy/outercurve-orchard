@@ -40,7 +40,7 @@ namespace Outercurve.Projects.Controllers {
                 Templates = results.Select(i => new CLATemplateAdminIndexEntry {
                     Item = i,
                     Name = i.As<CLATemplatePart>().CLATitle,
-                    Text = i.As<CLATemplatePart>().CLA.Substring(0, 100)
+                    Text = i.As<CLATemplatePart>().CLA.SafeSubstring(0, 100)
                 }).ToList(),
 
                 Pager = pagerShape
@@ -68,7 +68,7 @@ namespace Outercurve.Projects.Controllers {
                 return new HttpUnauthorizedResult();
             }
 
-            var claTemplate = _services.ContentManager.New("CLA");
+            var claTemplate = _services.ContentManager.New("CLATemplate");
 
             _services.ContentManager.Create(claTemplate);
             var model = _services.ContentManager.UpdateEditor(claTemplate, this);

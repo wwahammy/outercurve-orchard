@@ -12,6 +12,7 @@ using Orchard.Users.Models;
 using Orchard.Users.Services;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.ViewModels;
+using Outercurve.Projects.ViewModels.Parts;
 
 namespace Outercurve.Projects.Services
 {

@@ -1,10 +1,8 @@
 ﻿@using Outercurve.Projects.Helpers
 @using Outercurve.Projects.Services
 @using ServiceStack.Text
-@model Outercurve.Projects.ViewModels.EditMultipleLeaderViewModel
-           @{
-               Style.Require("local");
-           }
+@model Outercurve.Projects.ViewModels.Parts.EditMultipleLeaderViewModel
+
 @functions {
 
     IHtmlString CreateSelectedUsers(IList<string> selectedUsers) {

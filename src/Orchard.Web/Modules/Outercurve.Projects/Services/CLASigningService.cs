@@ -20,6 +20,7 @@ using Outercurve.Projects.Models;
 using Outercurve.Projects.ViewModels;
 using Outercurve.Projects.ViewModels.CLASigning;
 using Outercurve.Projects.Helpers;
+using Outercurve.Projects.ViewModels.Parts;
 
 namespace Outercurve.Projects.Services
 {

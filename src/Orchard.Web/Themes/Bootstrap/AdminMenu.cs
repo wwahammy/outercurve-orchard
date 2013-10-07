@@ -22,11 +22,6 @@ namespace Bootstrap {
         }
 
         private void BuildMenu(NavigationItemBuilder menu) {
-            menu.Add(T("foo"), "10.0",
-                item => item
-                    .Action("Index", "Admin", new { area = Constants.ROUTES_AREA_NAME })
-                    .Permission(Bootstrap.Permissions.ManageThemeSettings)
-            );
             menu.Add(T("Choose Options"), "10.1",
                 item => item
                     .Action("Index", "Admin", new { area = Constants.ROUTES_AREA_NAME })

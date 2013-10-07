@@ -10,6 +10,7 @@ using Orchard.Security;
 using Orchard.Users.Models;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.ViewModels;
+using Outercurve.Projects.ViewModels.Parts;
 
 namespace Outercurve.Projects.Services
 {

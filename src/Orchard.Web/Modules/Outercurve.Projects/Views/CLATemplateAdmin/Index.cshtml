@@ -3,11 +3,11 @@
 @{
     var userIndex = 0;
 
-    Layout.Title = T("CLAs").ToString();
-    Style.Require("local");
+    Layout.Title = T("Agreement Templates").ToString();
+   
 }
 
-<div class="manage">@Html.ActionLink(T("Add a new CLA").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
+<div class="manage">@Html.ActionLink(T("Add a new agreement template").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
 
     <fieldset>
         <table class="items">

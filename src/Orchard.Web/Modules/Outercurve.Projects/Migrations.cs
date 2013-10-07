@@ -81,7 +81,7 @@ namespace Outercurve.Projects
 
             // Creating table CLATemplatePartRecord
             SchemaBuilder.CreateTable("CLATemplatePartRecord", table => table
-                .ContentPartRecord()
+                .ContentPartVersionRecord()
                 .Column("CLATitle", DbType.String, c => c.Unique())
                 .Column("CLA", DbType.String, c => c.Unlimited())
             );
@@ -137,81 +137,12 @@ namespace Outercurve.Projects
 
         public int UpdateFrom1() {
             ContentDefinitionManager.AlterTypeDefinition("CLATemplate", b => b.WithPart<CLATemplatePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Creatable(false));
-            return 2;
-        }
-#if false
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        /// <from>http://stackoverflow.com/questions/16611692/how-to-change-inheritance-from-contentpartrecord-to-contentpartversionrecord</from>
-        public int UpdateFrom1() {
 
-            //TODO!!!!!
-            SchemaBuilder.CreateTable("CLATextPartRecord", command => command.ContentPartVersionRecord().Column("TemplateId", DbType.Int32).Column("TemplateVersion", DbType.Int32));
-
-
-
-            ContentDefinitionManager.AlterPartDefinition<CLATextPart>(cfg => cfg.Attachable());
-            ContentDefinitionManager.AlterTypeDefinition("Project", cfg => cfg.WithPart<ContainerPart>().WithPart<TitlePart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<MultipleLeaderPart>().WithPart<ProjectPart>().WithPart<CLATextPart>().Draftable());
-            ContentDefinitionManager.AlterTypeDefinition("CLA", b => b.WithPart<CLAPart>().WithPart<ContainablePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).WithPart<CLATextPart>().Draftable());
-
-
-            // Manually add the column that is required for the part to be a ContentPartVersionRecord
-            try {
-                SchemaBuilder.AlterTable("CLATemplatePartRecord", table => table.AddColumn<int>("ContentItemRecord_id"));
-
-                // Get table name
-
-                var tableName = "Outercurve_Projects_CLATemplatePartRecord";
-
-// must manually drop the constraint
-
-
-            SchemaBuilder.ExecuteSql(string.Format(@"
-INSERT INTO {0}
-                         (Id, ContentItemRecord_id, CLATitle, CLA)
-SELECT        t3.Id AS id, t2.Id AS ContentItemRecord_id, t2.CLATitle, t2.CLATitle
-FROM            {0} AS t2 LEFT OUTER JOIN
-                         Orchard_Framework_ContentItemVersionRecord AS t3 ON t2.Id = t3.ContentItemRecord_id
-WHERE        (t3.Latest = 1) AND (NOT (t3.Id IS NULL))
-", tableName));
-
-            SchemaBuilder.ExecuteSql(string.Format(@"
-DELETE FROM {0}
-WHERE ContentItemRecord_id is NULL
-", tableName));
-
-            SchemaBuilder.ExecuteSql(String.Format(@"
-ALTER TABLE {0}
-ADD CONSTRAINT PK_{0}_ID PRIMARY KEY (Id)
-", tableName));
-
+            SchemaBuilder.CreateTable
+                ("MoreSiteSettingsPartRecord", table => table.ContentPartVersionRecord().Column<string>("SiteOwner"));
 
             
-
-                foreach (var cla in _contentManager.Query("CLA").List())
-                {
-               
-                    dynamic claPart = cla.As<CLAPart>();
-                    cla.As<CLATextPart>().CLATemplate = claPart.CLATemplate;
-
-                }
-
-                foreach (var proj in _contentManager.Query("Project").List())
-                {
-                    var projPart = proj.As<ProjectPart>();
-                    proj.As<CLATextPart>().CLATemplate = _contentManager.Get(projPart.CLATemplate.Id, VersionOptions.Latest);
-                }
-
-            }
-            catch
-            {
-
-            }
-
             return 2;
         }
-#endif
     }
 }

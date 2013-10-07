@@ -41,4 +41,6 @@
   <Place Parts_ExtendedUser_Edit="Content:10"/>
   <Place Parts_ExtendedUser="Content:10"/>
   <Place Parts_CLA="Content:10"/>
+
+  <Place Parts_MoreSiteSettings_Edit="Content:11"/>
 </Placement>

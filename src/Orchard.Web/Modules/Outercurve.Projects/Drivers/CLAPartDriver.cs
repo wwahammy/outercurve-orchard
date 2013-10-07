@@ -18,6 +18,7 @@ using Outercurve.Projects.Helpers;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.Services;
 using Outercurve.Projects.ViewModels;
+using Outercurve.Projects.ViewModels.Parts;
 
 namespace Outercurve.Projects.Drivers
 {
@@ -88,29 +89,9 @@ namespace Outercurve.Projects.Drivers
             var model = new EditCLAViewModel();
            
 
-            if (updater.TryUpdateModel(model, Prefix, null, null)) {
-                var hadError = false;
+            if (updater.TryUpdateModel(model, Prefix, null, null) && _claService.Validate(model, updater)) {
+                
                 _claService.UpdateItemWithClaInfo(part.ContentItem, model);
-                /*
-                DateTime utc = new DateTime();
-                //check the data
-                
-                if (DateTime.TryParse(model.SigningDate, out utc)) {
-                    
-                }
-                else {
-                    updater.AddModelError("SigningDate", T("{0} is not a valid date", model.SigningDate));
-                    hadError = true;
-                }
-
-                //TODO: verify users
-                if (!hadError) {
-                    
-                }
-                else {*/
-                    
-//              }
-                
             }
             else {
                 _transaction.Cancel();

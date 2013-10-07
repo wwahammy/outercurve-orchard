@@ -3,15 +3,13 @@
 @model Outercurve.Projects.ViewModels.CLAAdminIndexViewModel
 
 @{
-    var userIndex = 0;
 
-    Layout.Title = T("CLAs").ToString();
-    Style.Require("local");
+    Layout.Title = T("Agreements").ToString();
 }
 
 @using (Html.BeginFormAntiForgeryPost()) {
     @Html.ValidationSummary()
-    <div class="manage">@Html.ActionLink(T("Download Excel of CLAs").ToString(), "GetExcelOfCLAs", new {}, new {@class = "button primaryAction"})@Html.ActionLink(T("Add a new CLA").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
+    <div class="manage">@Html.ActionLink(T("Download CSV of agreements").ToString(), "GetExcelOfCLAs", new {}, new {@class = "button primaryAction"})@Html.ActionLink(T("Add a new agreement").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
 
     <fieldset>
         <table class="items">
@@ -19,7 +17,7 @@
                 <tr>
                     <th scope="col">&nbsp;&darr;</th>
                     <th scope="col">@T("Date")</th>
-                    <th scope="col">@T("CLA Signer")</th>
+                    <th scope="col">@T("Agreement Signer")</th>
                     <th scope="col">@T("Project")</th>
                     <th scope="col">@T("Foundation Signer")</th>
                     <th scope="col">@T("Employer")</th>
@@ -32,7 +30,7 @@
                  
                 <tr>
                     <td>
-                        <input type="hidden" value="@Model.CLAs[userIndex].CLAItem.Id" name="@Html.NameOf(m => m.CLAs[userIndex].CLAItem.Id)"/>
+                       
                     </td>
                     <td>
                         @entry.SignedDate
@@ -63,7 +61,7 @@
                         @Html.ActionLink(T("Delete").ToString(), "Delete", new { claPart.Id}, new { itemprop = "RemoveUrl UnsafeUrl" })
                     </td>
                 </tr>
-                userIndex++;
+            
             }
         </table>
         @Display(Model.Pager)
