@@ -155,7 +155,6 @@
     <Compile Include="Drivers\CLATemplatePartDriver.cs" />
     <Compile Include="Drivers\CLATextPartDriver.cs" />
     <Compile Include="Drivers\ExtendedUserDriver.cs" />
-    <Compile Include="Drivers\MoreSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\MultipleLeaderPartDriver.cs" />
     <Compile Include="Drivers\ProjectPartDriver.cs" />
     <Compile Include="ExpressionExtensions.cs" />
@@ -163,7 +162,6 @@
     <Compile Include="Handlers\CLATemplatePartHandler.cs" />
     <Compile Include="Handlers\CLATextPartHandler.cs" />
     <Compile Include="Handlers\ExtendedUserPartHandler.cs" />
-    <Compile Include="Handlers\MoreSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\MultipleLeaderPartHandler.cs" />
     <Compile Include="Handlers\ProjectPartHandler.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
@@ -178,8 +176,6 @@
     <Compile Include="Models\CLATemplatePart.cs" />
     <Compile Include="Models\CLATextPart.cs" />
     <Compile Include="Models\ExtendedUserPart.cs" />
-    <Compile Include="Models\IMoreSiteSettings.cs" />
-    <Compile Include="Models\MoreSiteSettingsPart.cs" />
     <Compile Include="Models\MultipleLeaderPart.cs" />
     <Compile Include="Models\ProjectPart.cs" />
     <Compile Include="Repo.cs" />
@@ -190,11 +186,9 @@
     <Compile Include="Services\CLATemplateService.cs" />
     <Compile Include="Services\CLATextPartService.cs" />
     <Compile Include="Services\CLAToOfficeService.cs" />
-    <Compile Include="Services\CurrentMoreSiteSettingsWorkContext.cs" />
     <Compile Include="Services\ExtendedUserPartService.cs" />
     <Compile Include="Services\GalleryService.cs" />
     <Compile Include="Services\CLASigningService.cs" />
-    <Compile Include="Services\MoreSiteSettingsService.cs" />
     <Compile Include="Services\MultipleLeaderService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\RequestMSDNService.cs" />
@@ -222,7 +216,6 @@
     <Compile Include="ViewModels\Parts\EditCLATextViewModel.cs" />
     <Compile Include="ViewModels\Parts\EditCLAViewModel.cs" />
     <Compile Include="ViewModels\Parts\EditExtendedUserViewModel.cs" />
-    <Compile Include="ViewModels\Parts\EditMoreSiteSettingsViewModel.cs" />
     <Compile Include="ViewModels\Parts\EditMultipleLeaderViewModel.cs" />
     <Compile Include="ViewModels\Parts\EditProjectViewModel.cs" />
     <Compile Include="ViewModels\ProjectsAdminIndexViewModel.cs" />
@@ -381,9 +374,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\CLATemplateAdmin\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\MoreSiteSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

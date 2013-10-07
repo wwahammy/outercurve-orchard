@@ -137,11 +137,6 @@ namespace Outercurve.Projects
 
         public int UpdateFrom1() {
             ContentDefinitionManager.AlterTypeDefinition("CLATemplate", b => b.WithPart<CLATemplatePart>().WithPart<CommonPart>(p => p.WithSetting("OwnerEditorSettings.ShowOwnerEditor", false.ToString())).Creatable(false));
-
-            SchemaBuilder.CreateTable
-                ("MoreSiteSettingsPartRecord", table => table.ContentPartVersionRecord().Column<string>("SiteOwner"));
-
-            
             return 2;
         }
     }
