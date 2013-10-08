@@ -2,12 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using Orchard.Core.Contents.Controllers;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.MediaLibrary.Models;
 using Orchard.MediaLibrary.Services;
 using Orchard.MediaLibrary.ViewModels;
+using Orchard.Mvc;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
 

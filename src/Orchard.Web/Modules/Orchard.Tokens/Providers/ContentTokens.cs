@@ -6,6 +6,7 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Aspects;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.Core.Common.Fields;
+using Orchard.Core.Common.Models;
 using Orchard.Localization;
 using Orchard.ContentManagement.FieldStorage;
 using Orchard.Mvc.Extensions;
@@ -13,16 +14,15 @@ using Orchard.Mvc.Extensions;
 namespace Orchard.Tokens.Providers {
     public class ContentTokens : ITokenProvider {
         private readonly IContentManager _contentManager;
-        private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly UrlHelper _urlHelper;
 
-        public ContentTokens(IContentManager contentManager, IWorkContextAccessor workContextAccessor) {
+        public ContentTokens(IContentManager contentManager, UrlHelper urlHelper) {
             _contentManager = contentManager;
-            _workContextAccessor = workContextAccessor;
+            _urlHelper = urlHelper;
             T = NullLocalizer.Instance;
         }
 
         public Localizer T { get; set; }
-        private UrlHelper UrlHelper { get { return new UrlHelper(_workContextAccessor.GetContext().HttpContext.Request.RequestContext); } }
 
         public void Describe(DescribeContext context) {
             context.For("Content", T("Content Items"), T("Content Items"))
@@ -35,6 +35,7 @@ namespace Orchard.Tokens.Providers {
                 .Token("DisplayUrl", T("Display Url"), T("Url to display the content."), "Url")
                 .Token("EditUrl", T("Edit Url"), T("Url to edit the content."), "Url")
                 .Token("Container", T("Container"), T("The container Content Item."), "Content")
+                .Token("Body", T("Body"), T("The body text of the content item."), "Content")
                 ;
 
             // Token descriptors for fields
@@ -87,6 +88,8 @@ namespace Orchard.Tokens.Providers {
                 .Chain("EditUrl", "Url", EditUrl)
                 .Token("Container", content => DisplayText(Container(content)))
                 .Chain("Container", "Content", Container)
+                .Token("Body", Body)
+                .Chain("Body", "Text", Body)
                 ;
 
             if (context.Target == "Content") {
@@ -111,8 +114,8 @@ namespace Orchard.Tokens.Providers {
             }
 
             context.For<string>("Url")
-                   .Token("Absolute", url => new UrlHelper(_workContextAccessor.GetContext().HttpContext.Request.RequestContext).MakeAbsolute(url))
-                   .Chain("Absolute", "Text", url => new UrlHelper(_workContextAccessor.GetContext().HttpContext.Request.RequestContext).MakeAbsolute(url))
+                   .Token("Absolute", url => _urlHelper.MakeAbsolute(url))
+                   .Chain("Absolute", "Text", url => _urlHelper.MakeAbsolute(url))
                 ;
 
             context.For<TextField>("TextField")
@@ -174,7 +177,7 @@ namespace Orchard.Tokens.Providers {
                 return String.Empty;
             }
 
-            return UrlHelper.RouteUrl(_contentManager.GetItemMetadata(content).DisplayRouteValues);
+            return _urlHelper.RouteUrl(_contentManager.GetItemMetadata(content).DisplayRouteValues);
         }
 
         private string EditUrl(IContent content) {
@@ -182,7 +185,20 @@ namespace Orchard.Tokens.Providers {
                 return String.Empty;
             }
 
-            return UrlHelper.RouteUrl(_contentManager.GetItemMetadata(content).EditorRouteValues);
+            return _urlHelper.RouteUrl(_contentManager.GetItemMetadata(content).EditorRouteValues);
+        }
+
+        private string Body(IContent content) {
+            if (content == null) {
+                return String.Empty;
+            }
+
+            var bodyPart = content.As<BodyPart>();
+            if (bodyPart == null) {
+                return String.Empty;
+            }
+
+            return bodyPart.Text;
         }
     }
 }
