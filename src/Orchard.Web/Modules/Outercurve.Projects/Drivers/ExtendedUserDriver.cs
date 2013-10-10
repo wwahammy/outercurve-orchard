@@ -9,6 +9,7 @@ using Orchard.Security;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.Services;
 using Outercurve.Projects.ViewModels;
+using Outercurve.Projects.ViewModels.Parts;
 
 namespace Outercurve.Projects.Drivers
 {

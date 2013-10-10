@@ -10,6 +10,7 @@ using Orchard.Localization;
 using Orchard.Security;
 using Orchard.UI.Notify;
 using Proligence.Orchard.Testing;
+using StructureMap.Query;
 using Xunit;
 
 namespace Outercurve.Projects.Tests.Controllers.CLAAdminControllerTests
@@ -35,7 +36,7 @@ namespace Outercurve.Projects.Tests.Controllers.CLAAdminControllerTests
             orchardServicesMock.ContentManagerMock.ExpectCreateItem(newCLA);
 
 
-
+            
 
             orchardServicesMock.NotifierMock.ExpectInformation(It.IsAny<string>());
 
@@ -49,6 +50,10 @@ namespace Outercurve.Projects.Tests.Controllers.CLAAdminControllerTests
 
             Assert.Contains("Index", result.RouteValues.Values);
 
+        }
+
+        public void CreatePOST_InvalidModelState() {
+            CreateCLA();
         }
 
         public void CreateCLA()

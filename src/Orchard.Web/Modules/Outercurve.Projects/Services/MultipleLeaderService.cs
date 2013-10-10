@@ -10,6 +10,7 @@ using Orchard.Security;
 using Orchard.Users.Models;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.ViewModels;
+using Outercurve.Projects.ViewModels.Parts;
 
 namespace Outercurve.Projects.Services
 {
@@ -37,16 +38,17 @@ namespace Outercurve.Projects.Services
         public bool Validate(EditMultipleLeaderViewModel model, IUpdateModel update) {
 
             var valid = true;
-            var duplicates = model.UsernamesForLeadersSelected.Select(u => u.SelectedUserName).GroupBy(s => s).Where(g => g.Count() > 1)
+            var duplicates = model.SelectedUsernames.GroupBy(s => s).Where(g => g.Count() > 1)
                                   .Select(g => g.Key);
             foreach (var i in duplicates) {
-                update.AddModelError("UsernamesForLeadersSelected", T("The username {0} was selected twice", i));
+                update.AddModelError("SelectedUsernames", T("The username {0} was selected twice", i));
                 valid = false;
             }
 
-            foreach (var i in model.UsernamesForLeadersSelected) {
-                if (_membershipService.GetUser(i.SelectedUserName) == null) {
-                    update.AddModelError("UsernamesForLeadersSelected", T("The username {0} is not a valid user", i.SelectedUserName));
+            foreach (var i in model.SelectedUsernames)
+            {
+                if (_membershipService.GetUser(i) == null) {
+                    update.AddModelError("SelectedUsernames", T("The username {0} is not a valid user", i));
                     valid = false;
                 }
             }
@@ -59,7 +61,7 @@ namespace Outercurve.Projects.Services
             var record = item.As<MultipleLeaderPart>().Record;
             var oldLeaders =  _contentLeaderRepo.Fetch(r => r.MultipleLeaderPartRecord == record);
 
-            var newOwners = model.UsernamesForLeadersSelected.Select(p => _membershipService.GetUser(p.SelectedUserName).As<UserPart>().Record).
+            var newOwners = model.SelectedUsernames.Select(p => _membershipService.GetUser(p).As<UserPart>().Record).
                 Distinct().ToDictionary(r => r, r => false);
 
             //delete oldRecords

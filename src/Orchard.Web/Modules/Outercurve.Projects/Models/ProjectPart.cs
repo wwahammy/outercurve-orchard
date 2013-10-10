@@ -18,6 +18,6 @@ namespace Outercurve.Projects.Models
 
     public class ProjectPartRecord : ContentPartRecord {
         public virtual CLATemplatePartRecord CLATemplate { get; set; }
-
+        
     }
 }

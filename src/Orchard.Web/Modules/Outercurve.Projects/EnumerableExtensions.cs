@@ -18,16 +18,11 @@ namespace Outercurve.Projects
 
         public static void AddModelError<T,TProperty>(this IUpdateModel update, T model, Expression<Func<T, TProperty>> property, LocalizedString message) {
             if (property.IsProperty()) {
-                update.AddModelError(property.Name, message);
+                update.AddModelError(property.GetPropertyName(), message);
             }
             else
                 throw new Exception("BAD BAD BAD");
 
         }
-#if false
-        public static SelectList ToSelectList<T, TName, TValue>(this IEnumerable<T> input, Expression<Func<T, TName>> name, Expression<Func<T, TValue>> value) {
-            
-        }
-#endif
     }
 }

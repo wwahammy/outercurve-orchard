@@ -15,7 +15,7 @@ namespace Outercurve.Projects.Models
         public string CLA { get { return Record.CLA; } set { Record.CLA = value; } }
     }
 
-    public class CLATemplatePartRecord : ContentPartRecord {
+    public class CLATemplatePartRecord : ContentPartVersionRecord {
         public virtual string CLATitle { get; set; }
         [StringLengthMax]
         public virtual string CLA { get; set; }

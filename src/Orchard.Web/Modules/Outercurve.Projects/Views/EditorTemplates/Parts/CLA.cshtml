@@ -6,55 +6,24 @@
 @using Outercurve.Projects.Services
 
 
-@model Outercurve.Projects.ViewModels.EditCLAViewModel
+@model Outercurve.Projects.ViewModels.Parts.EditCLAViewModel
 @{
     //Script.Require("CLA");
     //Style.Require("Common_DatePicker");
   
   //  Style.Require("bootstrap-datetime").AtLocation(ResourceLocation.Foot);
-  
 
+   
 }
 
-@functions {
-    IHtmlString CreateValues(string selected, string selectedHtml, IEnumerable<string> ids) {
-        
-        //create
-
-        return Html.Raw(Json.Encode( ids.ToDictionary(i => i, i => i == selected ? selectedHtml : "null")));
-
-        /*
-        var stringBuilder = new StringBuilder("{");
-        foreach (var i in ids) {
-            stringBuilder.AppendLine().Append(i).Append(" : ");
-            if (i == selected) {
-                stringBuilder.Append("\"").Append(HttpUtility.JavaScriptStringEncode(selectedHtml)).Append("\"");
-            }
-            else {
-                stringBuilder.Append("null");
-            }
-            stringBuilder.Append(",");
-        }
-        //remove our comma
-        stringBuilder.Remove(stringBuilder.Length - 1, 1);
-        stringBuilder.AppendLine().Append("}");
-        return Html.Raw(stringBuilder.ToString());
-        */
-
-    }
-}
-
-
-    
-    
      
-<div class="form-horizontal container-fluid"> 
+<div class="form-horizontal container-fluid cla-editor"> 
     <div class="row">
 
             
-             <div class="page-header">
-                    <h3 style="margin-bottom: -5px;">CLA Signer Personal Details:</h3>
-                </div>
+             
+        <div  class="page-header" ><h3>CLA Signer Personal Details:</h3></div>
+             
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerUsername, T("CLA Signing User"))
                 <div class="controls">
@@ -66,7 +35,7 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerFirstName, T("First Name"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.CLASignerFirstName)
+                    @Html.ControlTextBoxFor(m => m.CLASignerFirstName)
                     @Html.ControlValidationMessageFor(m => m.CLASignerFirstName, null)
                 </div>
             </div>
@@ -74,7 +43,7 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerLastName, T("Last Name"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.CLASignerLastName)
+                    @Html.ControlTextBoxFor(m => m.CLASignerLastName)
                     @Html.ControlValidationMessageFor(m => m.CLASignerLastName, null)
                 </div>
             </div>
@@ -82,42 +51,42 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.CLASignerEmail, T("Email"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.CLASignerEmail)
+                    @Html.ControlTextBoxFor(m => m.CLASignerEmail, new {type= "email"})
                     @Html.ControlValidationMessageFor(m => m.CLASignerEmail, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Address1, T("Address1"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Address1)
+                    @Html.ControlTextBoxFor(m => m.Address1)
                     @Html.ControlValidationMessageFor(m => m.Address1, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Address2, T("Address2"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Address2)
+                    @Html.ControlTextBoxFor(m => m.Address2)
                     @Html.ControlValidationMessageFor(m => m.Address2, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.City, T("City"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.City)
+                    @Html.ControlTextBoxFor(m => m.City)
                     @Html.ControlValidationMessageFor(m => m.City, null)
                 </div>
             </div>
             <div class="control-group">
-                @Html.ControlLabelFor(m => m.State, T("State'Province"))
+                @Html.ControlLabelFor(m => m.State, T("State/Province"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.State)
+                    @Html.ControlTextBoxFor(m => m.State)
                     @Html.ControlValidationMessageFor(m => m.State, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.ZipCode, T("Postal Code"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ZipCode)
+                    @Html.ControlTextBoxFor(m => m.ZipCode)
                     @Html.ControlValidationMessageFor(m => m.ZipCode, null)
                 </div>
             </div>
@@ -125,14 +94,14 @@
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Country, T("Country"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Country)
+                    @Html.ControlTextBoxFor(m => m.Country)
                     @Html.ControlValidationMessageFor(m => m.Country, null)
                 </div>
             </div>
             <div class="control-group">
                 @Html.ControlLabelFor(m => m.Employer, T("Employer"))
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Employer)
+                    @Html.ControlTextBoxFor(m => m.Employer)
                     @Html.ControlValidationMessageFor(m => m.Employer, null)
                 </div>
             </div>
@@ -148,12 +117,10 @@
                
                 <div class="control-group">
                     @Html.ControlLabelFor(m => m.SigningDate, T("Signed By User On:") )
-                    <div class="input-append date">
+                    <div class="controls">
                         
-                            @Html.TextBoxFor(m => m.SigningDate)
-                            <span class="add-on">
-                                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                            </span>
+                        @Html.ControlTextBoxFor(m => m.SigningDate)
+                           
                         
                         
                         @Html.ControlValidationMessageFor(m => m.SigningDate, null)
@@ -186,19 +153,19 @@
                      
             </div>
         </div>
-        <div data-bind="visible: hasEmployerSigner" class="offset2">
+        <div data-bind="visible: showEmployerSignatureForm()" class="offset2">
             
                 <div class="control-group">
                     @Html.ControlLabelFor(m => m.CompanySigner, T("Company Signer"))
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.CompanySigner)
+                        @Html.ControlTextBoxFor(m => m.CompanySigner)
                         @Html.ControlValidationMessageFor(m => m.CompanySigner, null)
                     </div>
                 </div>
                 <div class="control-group">
                     @Html.ControlLabelFor(m => m.CompanySignerEmail, T("Company Signer Email"))
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.CompanySignerEmail)
+                        @Html.ControlTextBoxFor(m => m.CompanySignerEmail)
                         @Html.ControlValidationMessageFor(m => m.CompanySignerEmail, null)
                     </div>
                 </div>
@@ -227,7 +194,7 @@
                         @Html.CheckBoxFor(m => m.HasFoundationSigner, new Dictionary<string, object> {{"data-bind","checked: hasFoundationSigner"}} )
                     </div>
                 </div>
-                <div data-bind="visible: hasFoundationSigner" class="offset1">
+                <div data-bind="visible: hasFoundationSigner()" class="offset1">
                     
                         <div class="control-group">
                             @Html.ControlLabelFor(m => m.FoundationSignerUsername, T("Foundation Signer"))
@@ -251,38 +218,6 @@
          
         
     </div>
-
-
-     <div class="row">
-         <div class="page-header"><h3>License Agreement</h3></div>
-          <div class="control-group">
-                
-                            @{
-                                var createTemplate = Model.Template.TemplateNameVersionsAndIds.Select(
-                                    i =>
-                                    new SelectListItem {Selected = i.Key == Model.SelectedTemplate, Text = i.Value.ToString(), Value = i.Key}).ToArray();
-                            }
-                            @Html.ControlLabelFor(m => m.SelectedTemplate, T("CLA"))
-                            <div class="controls">
-                                @Html.DropDownListFor(m => m.SelectedTemplate,
-                                                      createTemplate,
-                                                      new RouteValueDictionary{ {"data-bind", "value: selectedTemplateId" }} )
-                   
-                                @Html.ControlValidationMessageFor(m => m.SelectedTemplate, null)
-                            </div>
-                        </div>
-               
-                
-                 <div   class="control-group">
-                     <div class="control-label">CLA Content</div>
-                     <div class="controls" style="list-style-type: decimal">
-                         <div data-bind="html: selectedTemplateHtml()" ></div>
-                     </div>
-                 </div>
-     </div>
-   
-
-   
     <div class="row">
         <div class="page-header">
             <h3>Other</h3>
@@ -337,17 +272,6 @@
     <script type="text/javascript">
 //<![CDATA[
         $(function () {
-          
-        /*  
-            $('#Html.FieldIdFor(m => m.SigningDate)').datetimepicker({
-                format: 'MM/dd/yyyy',
-                pickDate: true,
-                pickTime: false
-            });*/
-         
-            
-
-
             ko.bindingHandlers.goEnable = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                     if (valueAccessor()) {
@@ -372,30 +296,23 @@
                 }
             };
 
-            var ViewModel = function(signed, foundationSigner, employerSigner, needsCompanySignature, idVersionToHtmlDictionary, selectedTemplateId) {
+            var ViewModel = function(signed, foundationSigner, employerSigner, needsCompanySignature) {
                 var self = this;
                 /* visibility */
                 self.isSigned = ko.observable(signed);
                 self.hasFoundationSigner = ko.observable(foundationSigner);
-                self.hasEmployerSigner = ko.observable(employerSigner);
                 self.needsCompanySignature = ko.observable(needsCompanySignature);
+                self.hasEmployerSigner = ko.observable(employerSigner);
+
+                self.showEmployerSignatureForm = ko.computed(function() {
+                    return self.needsCompanySignature() && self.hasEmployerSigner();
+                });
+                
                 self.isValidEnabled = ko.computed(function() {
                     return self.isSigned() && self.hasFoundationSigner();
                 });
                 
-                /* get version and html */
-                self.idVersionToDictionary = ko.observableDictionary(idVersionToHtmlDictionary);
-                self.selectedTemplateId = ko.observable(selectedTemplateId);
-                self.selectedTemplateHtml = ko.computed(function() {
-                    if (self.idVersionToDictionary.get(self.selectedTemplateId())() == "null") {
-                        $.getJSON("@Url.Action("GetIdAndVersion", "CLAAdmin", new RouteValueDictionary {{"area", "Outercurve.Projects"}})?idVersion=" + self.selectedTemplateId(), function(data) {
-                            self.idVersionToDictionary.set(self.selectedTemplateId(), data);
-                        });
-                        return "";
-                    }
-                    return self.idVersionToDictionary.get(self.selectedTemplateId());
-                });
-            
+               
             
             };
             var signedByUser = @Model.IsSignedByUser.ToString().ToLower();
@@ -406,18 +323,10 @@
 
             var needsCompanySignature = @Model.NeedCompanySignature.ToString().ToLower();
             
-            var idVersionToHtmlDictionaryMap = @CreateValues(Model.SelectedTemplate, Model.Template.CurrentHtmlForTemplate, Model.Template.TemplateNameVersionsAndIds.Select(i => i.Key));
-
-            var selectedTemplateId = "@Model.SelectedTemplate";
-
-            var ourVm = new ViewModel(signedByUser, signedByFoundation, signedByCompany, needsCompanySignature, idVersionToHtmlDictionaryMap, selectedTemplateId);
-            ko.applyBindings(ourVm);
-
-
            
-            
-            
-           
+
+            var ourVm = new ViewModel(signedByUser, signedByFoundation, signedByCompany, needsCompanySignature);
+            ko.applyBindings(ourVm, $(".cla-editor")[0]);
             
         })
 

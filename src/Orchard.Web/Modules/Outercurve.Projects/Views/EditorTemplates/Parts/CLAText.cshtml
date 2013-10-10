@@ -1,0 +1,85 @@
+﻿@using Outercurve.Projects.Helpers
+@model Outercurve.Projects.ViewModels.Parts.EditCLATextViewModel
+          
+@functions {
+    IHtmlString CreateValues(string selected, string selectedHtml, IEnumerable<string> ids)
+    {
+
+        return Html.Raw(Json.Encode(ids.ToDictionary(i => i, i => i == selected ? selectedHtml : "null")));
+
+    }
+}
+<div class="form-horizontal container-fluid">
+@if (Model.TemplateDoesntExist) {
+    <div class="page-header"><h3>License Agreement</h3></div>
+    <p>No license agreement was found. Would you like to @Html.ActionLink("create one", "Create", new { id = "CLATemplate", area = "Contents", controller = "Admin"})?</p>
+}
+else {
+  
+
+    <div class="row clatext-editor">
+        <div class="page-header"><h3>License Agreement</h3></div>
+        <div class="control-group">
+                
+            @{
+                var createTemplate = Model.TemplateInfo.TemplateNameVersionsAndIds.Select(
+                    i =>
+                        new SelectListItem { Selected = i.Key == Model.SelectedTemplate, Text = i.Value.ToString(), Value = i.Key }).ToArray();
+            }
+            @Html.ControlLabelFor(m => m.SelectedTemplate, T("CLA"))
+            <div class="controls">
+                @Html.DropDownListFor(m => m.SelectedTemplate,
+                    createTemplate,
+                    new RouteValueDictionary { { "data-bind", "value: selectedTemplateId" } })
+                   
+                @Html.ControlValidationMessageFor(m => m.SelectedTemplate, null)
+            </div>
+        </div>
+               
+                
+        <div  class="control-group">
+            <div class="control-label">CLA Content</div>
+            <div class="controls" style="list-style-type: decimal">
+                <div data-bind="html: selectedTemplateHtml()" ></div>
+            </div>
+        </div>
+    </div>
+   
+
+    
+using (Script.Foot())
+{
+    <script type="text/javascript">
+
+//<![CDATA[
+        $(function() {
+
+            var ViewModel = function(idVersionToHtmlDictionary, selectedTemplateId) {
+                var self = this;
+                /* get version and html */
+                self.idVersionToDictionary = ko.observableDictionary(idVersionToHtmlDictionary);
+                self.selectedTemplateId = ko.observable(selectedTemplateId);
+                self.selectedTemplateHtml = ko.computed(function() {
+                    if (self.idVersionToDictionary.get(self.selectedTemplateId())() == "null") {
+                        $.getJSON("@Url.Action("GetIdAndVersion", "CLAAdmin", new RouteValueDictionary {{"area", "Outercurve.Projects"}})?idVersion=" + self.selectedTemplateId(), function(data) {
+                            self.idVersionToDictionary.set(self.selectedTemplateId(), data);
+                        });
+                        return "";
+                    }
+                    return self.idVersionToDictionary.get(self.selectedTemplateId());
+                });
+            };
+
+            
+            var idVersionToHtmlDictionaryMap = @CreateValues(Model.SelectedTemplate, Model.TemplateInfo.CurrentHtmlForTemplate, Model.TemplateInfo.TemplateNameVersionsAndIds.Select(i => i.Key));
+
+            var selectedTemplateId = "@Model.SelectedTemplate";
+            var ourVm = new ViewModel(idVersionToHtmlDictionaryMap, selectedTemplateId);
+            ko.applyBindings(ourVm, $('.clatext-editor')[0]);
+        });
+//]]>
+</script>
+}
+
+}
+     </div>

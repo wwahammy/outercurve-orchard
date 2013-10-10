@@ -5,7 +5,7 @@
 
     <Place Parts_Container_Edit="-"/>
     <Place Parts_CLA_Edit="Content:10"/>
-    
+    <Place Parts_CLAText_Edit="Content:10"/>
   </Match>
 
   <Match ContentType="CLATemplate">
@@ -32,6 +32,7 @@
     <Place Parts_Project_Edit="Content:11"/>
     <Place Parts_Common_Container_Edit="-"/>
     <Place Parts_Container_Edit="-"/>
+    <Place Parts_CLAText_Edit="Content:10"/>
   </Match>
   
   <Place Parts_Common_Metadata="-"/>
@@ -40,4 +41,6 @@
   <Place Parts_ExtendedUser_Edit="Content:10"/>
   <Place Parts_ExtendedUser="Content:10"/>
   <Place Parts_CLA="Content:10"/>
+
+  <Place Parts_MoreSiteSettings_Edit="Content:11"/>
 </Placement>

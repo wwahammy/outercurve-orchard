@@ -5,16 +5,19 @@ using System.Web;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.Localization;
 using Orchard.Security;
 using Orchard.Users.Models;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.ViewModels;
+using Outercurve.Projects.ViewModels.Parts;
 
 namespace Outercurve.Projects.Services
 {
     public interface ICLAPartService : IDependency
     {
        void UpdateItemWithClaInfo(ContentItem item, EditCLAViewModel model);
+        bool Validate(EditCLAViewModel model, IUpdateModel updater);
     }
     public class CLAPartService : ICLAPartService
     {
@@ -25,6 +28,7 @@ namespace Outercurve.Projects.Services
         private readonly IUTCifierService _utcService;
         private readonly IMembershipService _membership;
         private readonly ICLATemplateService _templateService;
+        private readonly Localizer T;
 
 
         public CLAPartService(IRepository<UserPartRecord> user,
@@ -37,6 +41,27 @@ namespace Outercurve.Projects.Services
             _utcService = utcService;
             _membership = membership;
             _templateService = templateService;
+
+            T = NullLocalizer.Instance;
+        }
+
+
+        public bool Validate(EditCLAViewModel model, IUpdateModel updater) {
+            bool hasError = false;
+            //validate whether foundation and CLASigner are valid
+            if (model.HasFoundationSigner) {
+                if (_membership.GetUser(model.FoundationSignerUsername) == null) {
+                    updater.AddModelError(model, m => m.FoundationSignerUsername, T("Foundation signer username does not belong to a valid user."));
+                    hasError = true;
+                }
+            }
+
+            if (_membership.GetUser(model.CLASignerUsername) == null) {
+                updater.AddModelError(model, m => m.CLASignerUsername, T("The CLA signer username does not belong to a valid user"));
+                hasError = true;
+            }
+
+            return !hasError;
         }
 
         public void UpdateItemWithClaInfo(ContentItem item, EditCLAViewModel model) {
@@ -62,8 +87,7 @@ namespace Outercurve.Projects.Services
             part.RequiresEmployerSigner = model.NeedCompanySignature;
 
 
-            var template = _templateService.GetCLATemplateFromIdVersion(model.SelectedTemplate);
-            part.CLATemplate = template;
+       
 
             if (model.IsSignedByUser) {
                 part.SignedDate = _utcService.GetUtcFromLocalDate(model.SigningDate);

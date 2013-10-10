@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
+using NHibernate.Hql.Ast.ANTLR;
 
 namespace Outercurve.Projects
 {
@@ -35,5 +36,30 @@ namespace Outercurve.Projects
 
 			return prop != null && prop.Member is PropertyInfo;
 		}
+
+        public static string GetPropertyName(this LambdaExpression expression) {
+            if (IsProperty(expression.Body)) {
+                return GetPropertyName(expression.Body);
+            }
+
+            return null;
+        }
+
+        public static string GetPropertyName(this Expression expression) {
+            if (IsProperty(expression)) {
+                try {
+
+                    var prop = expression as MemberExpression;
+
+                    var propInfo = prop.Member as PropertyInfo;
+                    return propInfo.Name;
+                }
+                catch (Exception) {
+
+                    return null;
+                }
+            }
+            return null;
+        }
     }
 }
