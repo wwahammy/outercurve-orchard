@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using MarkdownSharp;
 using Orchard;
 using Orchard.ContentManagement;
@@ -13,11 +14,13 @@ using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Logging;
+using Orchard.Mvc;
 using Orchard.Security;
 using Orchard.Settings;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
+using Orchard.Users.Models;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.Services;
 using Outercurve.Projects.ViewModels;
@@ -41,34 +44,58 @@ namespace Outercurve.Projects.Controllers
         }
 
 
-        public ActionResult Index(PagerParameters pagerParameters) {
-             if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list custom forms")))
+        public ActionResult Index(CLAIndexOptions options, PagerParameters pagerParameters) {
+             if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to view agreements")))
                 return new HttpUnauthorizedResult();
 
             try {
 
                 var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
 
+                if (options == null) 
+                    options = new CLAIndexOptions();
+                
 
                 var query = _services.ContentManager.Query().ForType("CLA");
+
+                switch (options.Order) {
+                    case CLAOrder.Created:
+                        //this should happen anyways but I don't think this breaks anything by doing this
+                        query = query.OrderBy<CLAPartRecord>(r => r.Id);
+                        break;
+                    case CLAOrder.Name:
+                        query = query.OrderBy<CLAPartRecord>(r => r.FirstName).OrderBy(r => r.LastName);
+                        break;
+                    case CLAOrder.SignedByUser:
+                        query = query.OrderBy<CLAPartRecord>(r => r.SignedDate);
+                        break;
+
+                }
+
                 var pagerShape = Shape.Pager(pager).TotalItemCount(query.Count());
 
                 var results = query.Slice(pager.GetStartIndex(), pager.PageSize);
 
-
+                 
+                //this needs to be fixed:
                 var model = new CLAAdminIndexViewModel {
                     CLAs = results.Select(i => new CLAAdminIndexEntry {
                         CLAItem = i,
-                       CLASignerName = _extUserService.GetFullName(i.As<CLAPart>().CLASigner),
+                       CLASignerName =  String.Format("{0} {1} - (User: {2})",i.As<CLAPart>().FirstName, i.As<CLAPart>().LastName, _services.ContentManager.Get<IUser>(i.As<CLAPart>().CLASigner.Id).UserName),
                         FoundationSignerName = i.As<CLAPart>().FoundationSigner == null ? "-" : _extUserService.GetFullName(i.As<CLAPart>().FoundationSigner),
                         ProjectTitle = i.As<CommonPart>().Container == null ? "-" :i.As<CommonPart>().Container.As<TitlePart>().Title,
                         SignedDate = i.As<CLAPart>().SignedDate == null ? "Not Signed" : i.As<CLAPart>().SignedDate.ToLocalDateString(),
                         Employer = i.As<CLAPart>().Employer,
                         IsActive = i.As<CLAPart>().IsValid
                     }).ToList(),
-                    Pager = pagerShape
+                    Pager = pagerShape,
+                    Options = options
                 };
-                return View((object) model);
+                var routeData = new RouteData();
+                routeData.Values.Add("Options.Order", options.Order);
+                pagerShape.RouteData(routeData);
+
+                return View(model);
             }
             catch (Exception e) {
                 Logger.Error(e, "holy cow!!");

@@ -1,5 +1,6 @@
 ﻿@using Orchard.ContentManagement
 @using Outercurve.Projects.Models
+@using Outercurve.Projects.ViewModels
 @model Outercurve.Projects.ViewModels.CLAAdminIndexViewModel
 
 @{
@@ -10,7 +11,15 @@
 @using (Html.BeginFormAntiForgeryPost()) {
     @Html.ValidationSummary()
     <div class="manage">@Html.ActionLink(T("Download CSV of agreements").ToString(), "GetExcelOfCLAs", new {}, new {@class = "button primaryAction"})@Html.ActionLink(T("Add a new agreement").ToString(), "Create", new {}, new {@class = "button primaryAction"})</div>
-
+    <fieldset class="bulk-actions">
+        <label for="sortResults">@T("Sort by:")</label>
+        <select id="sortResults" name="@Html.NameOf(m => m.Options.Order)">
+            @Html.SelectOption(Model.Options.Order, CLAOrder.Created, T("Created Time").ToString())
+            @Html.SelectOption(Model.Options.Order, CLAOrder.Name, T("Signed Name").ToString())
+            @Html.SelectOption(Model.Options.Order, CLAOrder.SignedByUser, T("User Signed Date").ToString())
+        </select>
+        <button type="submit" name="submit.Filter" value="@T("Apply")">@T("Apply")</button>
+    </fieldset>
     <fieldset>
         <table class="items">
             <thead>
