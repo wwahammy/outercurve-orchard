@@ -234,6 +234,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outercurve.Projects.Tests", "Outercurve.Projects.Tests\Outercurve.Projects.Tests.csproj", "{60BFD6A6-196D-4F9F-BE59-109F0EA7397D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proligence.Orchard.Testing", "Proligence.Orchard.Tests\Proligence.Orchard.Testing.csproj", "{25E68CE8-EB2B-493C-94BC-10706A5AF682}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Azure", "Orchard.Web\Modules\Orchard.Azure\Orchard.Azure.csproj", "{CBC7993C-57D8-4A6C-992C-19E849DFE71D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapAdminTheme", "Orchard.Web\Themes\BootstrapAdminTheme\BootstrapAdminTheme.csproj", "{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}"
