@@ -58,10 +58,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Orchard.Core">
-      <HintPath>..\..\..\orchard\src\Orchard.Web\bin\Orchard.Core.dll</HintPath>
+      <HintPath>..\..\Core\bin\Orchard.Core.dll</HintPath>
     </Reference>
     <Reference Include="Orchard.Framework">
-      <HintPath>..\..\..\orchard\src\Orchard.Web\bin\Orchard.Framework.dll</HintPath>
+      <HintPath>..\..\..\Orchard\bin\Debug\Orchard.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

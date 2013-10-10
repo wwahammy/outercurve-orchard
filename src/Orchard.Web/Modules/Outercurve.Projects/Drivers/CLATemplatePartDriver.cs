@@ -50,7 +50,7 @@ namespace Outercurve.Projects.Drivers
 
         protected override DriverResult Editor(CLATemplatePart part, IUpdateModel updater, dynamic shapeHelper) {
             var model = new EditCLATemplateViewModel();
-            if (updater.TryUpdateModel(model, Prefix, null, null)) {
+            if (updater.TryUpdateModel(model, Prefix, null, null) && _templateService.Validate(model, updater, part)) {
                 _templateService.UpdateCLATemplatePart(part.ContentItem, model);
                 //return good thing
             }
@@ -78,18 +78,6 @@ namespace Outercurve.Projects.Drivers
                                     TemplateName: TemplateName,
                                     Model: vm,
                                     Prefix: Prefix));
-        }
-
-        protected override void Importing(CLATemplatePart part, Orchard.ContentManagement.Handlers.ImportContentContext context)
-        {
-            part.CLA = context.Attribute(part.PartDefinition.Name, "CLA");
-            part.CLATitle = context.Attribute(part.PartDefinition.Name, "CLATitle");
-        }
-
-        protected override void Exporting(CLATemplatePart part, Orchard.ContentManagement.Handlers.ExportContentContext context)
-        {
-            context.Element(part.PartDefinition.Name).SetAttributeValue("CLA", part.Record.CLA);
-            context.Element(part.PartDefinition.Name).SetAttributeValue("CLATitle", part.Record.CLATitle);
         }
     }
 }

@@ -132,14 +132,13 @@ namespace Outercurve.Projects.Tests.CLASigningControllerTests
                                                               Country = Strings.COUNTRY, Employer = Strings.EMPLOYER, ZipCode = Strings.ZIPCODE,
                                                               RequiresEmployerSigner = true, 
                                                               SignerEmail = Strings.EMAIL,
-                                                              TemplateId =  Ids.VALIDCLATEMPLATEID,
-                                                              TemplateVersion = Ids.CLAVERSION,
+                                                              
                                                               FirstName = Strings.FIRSTNAME,
                                                               LastName = Strings.LASTNAME,
                                                               
                                                               
                                                           }};
-            claPart.CLATemplateField.Loader(() => claTemplate);
+//            claPart.CLATemplateField.Loader(() => claTemplate);
 
 
             _claContentItem = ContentFactory.CreateContentItem(Ids.CLAID, "CLA",

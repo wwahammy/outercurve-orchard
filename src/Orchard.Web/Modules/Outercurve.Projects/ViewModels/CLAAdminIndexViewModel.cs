@@ -10,6 +10,7 @@ namespace Outercurve.Projects.ViewModels
     {
         public IList<CLAAdminIndexEntry> CLAs { get; set; }
         public dynamic Pager { get; set; }
+        public CLAIndexOptions Options {get; set; }
     }
 
     public class CLAAdminIndexEntry
@@ -21,5 +22,15 @@ namespace Outercurve.Projects.ViewModels
         public string Employer { get; set; }
         public string SignedDate { get; set; }
         public bool IsActive { get; set; }
+    }
+
+    public class CLAIndexOptions {
+        public CLAOrder Order { get; set; }
+    }
+
+    public enum CLAOrder {
+       Created,
+       SignedByUser,
+       Name
     }
 }

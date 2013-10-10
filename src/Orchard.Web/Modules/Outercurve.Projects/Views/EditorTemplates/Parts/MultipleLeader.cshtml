@@ -1,21 +1,114 @@
-﻿@using Outercurve.Projects.Services
-@using Outercurve.Projects.ViewModels
-@model Outercurve.Projects.ViewModels.EditMultipleLeaderViewModel
-@{
-    Script.Require("listEditor");
+﻿@using Outercurve.Projects.Helpers
+@using Outercurve.Projects.Services
+@using ServiceStack.Text
+@model Outercurve.Projects.ViewModels.Parts.EditMultipleLeaderViewModel
+
+@functions {
+
+    IHtmlString CreateSelectedUsers(IList<string> selectedUsers) {
+        
+        return Html.Raw(System.Web.Helpers.Json.Encode(selectedUsers));
+    }
+
+    IHtmlString CreateUserNameToNiceNames(IEnumerable<KeyValuePair<string, string>> usernameToNiceNames)
+    {
+        return Html.Raw(JsonSerializer.SerializeToString(usernameToNiceNames.ToDictionary(i => i.Key, i => i.Value)));
+    }
+
 }
-<fieldset>
-    <legend>Leaders</legend>
-    <div>@Html.ActionLink("Quick Add User", "Create", new { Controller = "QuickUserAdmin", Area = "Outercurve.Projects", returnUrl = Context.Request.RawUrl }, new {@class = "button primaryAction"});</div>
-    <div id="editorRows">
-        @foreach (var i in Model.UsernamesForLeadersSelected) {
-            Html.RenderPartial("MultipleLeaderRowPartial", i);
-    
-        }
+<div class="form-horizontal container-fluid">
+<div class="multipleleaders-editor">
+    <h2>Leaders</h2>
+    <h3><button data-bind="click: add">Add Leader</button> | @Html.ActionLink("Quick Add User", "Create", new { Controller = "QuickUserAdmin", Area = "Outercurve.Projects", returnUrl = Context.Request.RawUrl }, new {@class = "button primaryAction"})</h3>
+    <div data-bind="foreach: selectedUsers.items">
+        <input type="hidden"  data-bind="value:key(), setName:$root.fieldPrefix +'.SelectedUsernames.index'" autocomplete="off"/>
+        <div class="editorRow" >
+            <div class="editor-label">
+                <label >Leader</label>
+                
+            </div>
+            <div class="editor-field">
+                <select  data-bind="options: $root.usernameToNiceNames.items, optionsText: 'value', optionsValue:'key', value: value, setName: $root.fieldPrefix +'.SelectedUsernames[' + key() +']'"></select>
+                <button data-bind="click: $root.remove">delete</button>
+            </div>
+        </div>
+        
+       
     </div>
-</fieldset>
+</div>
+    </div>
+@using (Script.Foot()) {
+   <script type="text/javascript">
 
-@Html.ActionLink("Add another leader", "AddOwner", "Simple", new {Area="Outercurve.Projects"}, new { id= "addItem"})
+       //<![CDATA[
+       $(function() {
+           var newUuid = function () {
+               return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                   var r = Math.random() * 16 | 0,
+                       v = c == 'x' ? r : (r & 0x3 | 0x8);
+                   return v.toString(16);
+               });
+           };
+
+           var setElementName = function(element, name) {
+               element.name = name;
+
+               // Workaround IE 6/7 issue
+               // - https://github.com/SteveSanderson/knockout/issues/197
+               // - http://www.matts411.com/post/setting_the_name_attribute_in_ie_dom/
+               if (ko.utils.ieVersion <= 7) {
+                   try {
+                       element.mergeAttributes(document.createElement("<input name='" + element.name + "'/>"), false);
+                   } catch(e) {
+                   } // For IE9 with doc mode "IE9 Standards" and browser mode "IE9 Compatibility View"
+               }
+           };
+
+           var ViewModel = function (fieldPrefix, selectedUsers, usernameToNiceNames) {
+               var self = this;
+               self.usernameToNiceNames = ko.observableDictionary(usernameToNiceNames);
+               self.fieldPrefix = fieldPrefix;
+               self.selectedUsers = ko.observableDictionary();
+
+               self.add = function () {
+                   var ourFieldId = newUuid();
+                   self.selectedUsers.set(ourFieldId, self.usernameToNiceNames.keys()[0]);
+               };
+
+               self.addItem = function (item) {
+                   var ourFieldId = newUuid();
+                   self.selectedUsers.set(ourFieldId, item);
+               };
+
+               self.remove = function (item) {
+                   self.selectedUsers.remove(item);
+               };
+
+               for (var i = 0; i < selectedUsers.length; i++) {
+                   self.addItem(selectedUsers[i]);
+               }
+           };
+
+           ko.bindingHandlers['setName'] = {
+               'init': function (element, valueAccessor) {
+              
+
+                   setElementName(element, valueAccessor());
+
+               }
+           };
 
 
+           var ourLeaders = @CreateSelectedUsers(Model.SelectedUsernames);
+           var userNameToNames = @CreateUserNameToNiceNames(Model.UsernamesToNiceNames);
+           var prefix = "@ViewData.TemplateInfo.HtmlFieldPrefix";
+           var ourVm = new ViewModel(prefix, ourLeaders, userNameToNames);
+           ko.applyBindings(ourVm, $('.multipleleaders-editor')[0]);
+           
+
+
+        });
+        //]]>
+</script>
+}
     

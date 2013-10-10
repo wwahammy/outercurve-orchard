@@ -15,6 +15,7 @@ using Outercurve.Projects.Models;
 using Outercurve.Projects.Services;
 using Outercurve.Projects.ViewModels;
 using Outercurve.Projects.ViewModels.CLASigning;
+using Outercurve.Projects.ViewModels.Parts;
 using SpecsFor.ShouldExtensions;
 using Xunit;
 using Moq.Protected;

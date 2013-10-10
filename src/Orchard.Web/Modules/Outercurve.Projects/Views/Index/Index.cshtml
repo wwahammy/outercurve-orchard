@@ -11,11 +11,11 @@
     <ul>
         <li>@Html.ActionLink( "View Outercurve Contributors (by project)", "Projects", "CLA")</li>
     </ul>
-    
-    <ul>
-        <li>@Html.ActionLink("Become an Outercurve Contributor (Sign a CLA)", "Index", "CLASigning")</li>
-    </ul>
-    
+   @if (false) {
+       <ul>
+           <li>@Html.ActionLink("Become an Outercurve Contributor (Sign a CLA)", "Index", "CLASigning")</li>
+       </ul>
+   }
 </div>
 
 @if (Model.IsContributor) {

@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ExpectedObjects;
+using FluentAssertions;
 using Moq;
 using Moq.Protected;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.Services;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Users.Models;
-using Outercurve.Projects.Drivers;
 using Outercurve.Projects.Models;
-using Outercurve.Projects.Services;
+using Outercurve.Projects.Tests.CLAAdminControllerTests;
 using Outercurve.Projects.ViewModels;
 using Outercurve.Projects.ViewModels.Parts;
 using Proligence.Orchard.Testing;
-using SpecsFor.ShouldExtensions;
 using Xunit;
 
-namespace Outercurve.Projects.Tests.CLAAdminControllerTests
+namespace Outercurve.Projects.Tests.Drivers.CLAPartDriverTests
 {
     public class EditorTests : ClaPartDriverTestFixture {
 
@@ -65,7 +61,9 @@ namespace Outercurve.Projects.Tests.CLAAdminControllerTests
             RunSetup();
         }
 
+        
         private void RunSetup() {
+            base.Setup();
             _signer = new ExtendedUserPartRecord {AutoRegistered = false, FirstName = Strings.FIRSTNAME, LastName = Strings.LASTNAME, Id = Ints.SignerId};
             var userpart = new UserPartRecord { NormalizedUserName = Strings.NORMALIZEDUSERNAME, Id = Ints.SignerId };
             _mockContentManager.ExpectGetItem(ContentFactory.CreateContentItem(Ints.SignerId, new ExtendedUserPart { Record = _signer}, new UserPart { Record = userpart}));
@@ -73,18 +71,26 @@ namespace Outercurve.Projects.Tests.CLAAdminControllerTests
 
         }
         [Fact]
-        public void EditorBasic() {
+        public void EditorValid() {
             CreateCLAPart();
-            _mockDriver.Protected().Setup<DriverResult>("CreateShape", ItExpr.IsAny<EditCLAViewModel>(), ItExpr.IsAny<object>());
 
 
-           Assert.DoesNotThrow(() => claDriver.InvokeEditor(_claPart, ShapeFactory));
+           ContentShapeResult result = null;
+           Assert.DoesNotThrow(() => result = claDriver.InvokeEditor(_claPart, ShapeFactory) as ContentShapeResult);
 
-         //  _mockDriver.Protected().Verify("CreateShape", Times.Once(), ItExpr.IsAny<EditCLAViewModel>(), ItExpr.IsAny<object>());
+          
 
-          _mockDriver.Protected().Verify("CreateShape", Times.Once(), ItExpr.Is<EditCLAViewModel>(i => ValidFromBuild().ToExpectedObject().IsEqualTo(i)), ItExpr.IsAny<object>());
-            
-           
+
+            var mock = result.BuildShapeMock();
+
+
+            var shouldBe = ValidFromBuild().ToExpectedObject();
+
+            mock.Data["Model"].Should().Match(o => shouldBe.IsEqualTo(o));
+        }
+
+        [Fact]
+        public void EditorInvalid() {
             
         }
 
@@ -151,5 +157,13 @@ namespace Outercurve.Projects.Tests.CLAAdminControllerTests
 
             
         }
+/*
+        public EditCLAViewModel CreateInitialValidVM()
+        {
+            var model = new EditCLAViewModel {Address1 = Strings.ADDRESS1, Address2 = Strings.ADDRESS2, City = Strings.CITY, Comments = Strings.COMMENTS, State = Strings.STATE, Country = Strings.COUNTRY, CLASignerFirstName = Strings.FIRSTNAME, CLASignerLastName = Strings.LASTNAME, CLASignerEmail = Strings.EMAIL, CLASignerUsername = Strings.USERNAME, IsCommitter = false, FoundationSigningDate = null, SigningDate = null, Employer = Strings.EMPLOYER, LocationOfCLA = null, NeedCompanySignature = false, StaffOverride = false};
+
+            return model;
+
+        }*/
     }
 }

@@ -10,10 +10,7 @@ namespace Outercurve.Projects.Models
 {
     public class CLAPart : ContentPart<CLAPartRecord> {
 
-        private readonly LazyField<IContent> _templateId = new LazyField<IContent>();
-
-        public LazyField<IContent> CLATemplateField { get { return _templateId; } }
-
+      
 
         public string SignerFromCompany {
             get { return Record.SignerFromCompany; }
@@ -127,25 +124,7 @@ namespace Outercurve.Projects.Models
         
         }
 
-
-        public IContent CLATemplate {
-            get { return CLATemplateField.Value; }
-            set { CLATemplateField.Value = value; }
-        }
-        
-        /*
-        public int TemplateId {
-            get { return Record.TemplateId; }
-            set { Record.TemplateId = value; }
-        }
-
-
-        public int TemplateVersion
-        {
-            get { return Record.TemplateVersion; }
-            set { Record.TemplateVersion = value; }
-        }*/
-
+       
         public string SignerFromCompanyEmail {
             get { return Record.SignerFromCompanyEmail; }
             set { Record.SignerFromCompanyEmail = value; }
@@ -175,7 +154,7 @@ namespace Outercurve.Projects.Models
         public virtual DateTime? EmployerMustSignBy { get; set; }
 
         public virtual bool IsValid() {
-            return SignedDate.HasValue && (!RequiresEmployerSigner || RequiresEmployerSigner && EmployerSignedOn.HasValue) && !OfficeValidOverride;
+            return SignedDate.HasValue && (!RequiresEmployerSigner || RequiresEmployerSigner && EmployerSignedOn.HasValue) && !OfficeValidOverride && FoundationSignedOn.HasValue;
         }
   
 
@@ -198,9 +177,7 @@ namespace Outercurve.Projects.Models
 
         public virtual bool RequiresEmployerSigner { get; set; }
 
-        public virtual int TemplateId { get; set; }
-
-        public virtual int TemplateVersion { get; set; }
+        
 
         
 
