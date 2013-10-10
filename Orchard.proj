@@ -18,7 +18,7 @@
     <ModulesSrcFolder>$(MSBuildProjectDirectory)\src\Orchard.Web\Modules</ModulesSrcFolder>
     <OrchardCoreSrcFolder>$(MSBuildProjectDirectory)\src\Orchard.Web\Core</OrchardCoreSrcFolder>
     <ThemesSrcFolder>$(MSBuildProjectDirectory)\src\Orchard.Web\Themes</ThemesSrcFolder>
-
+	<PrecompileCleanFolders>$(BuildFolder)\Precompiled;$(BuildFolder)\Compile;$(BuildFolder)\Stage</PrecompileCleanFolders>
     <CompileFolder>$(BuildFolder)\Compile</CompileFolder>
     <WebSitesFolder>$(CompileFolder)\_PublishedWebsites</WebSitesFolder>
     <StageFolder>$(BuildFolder)\Stage</StageFolder>
