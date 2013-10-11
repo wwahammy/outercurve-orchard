@@ -7,6 +7,7 @@ using Moq;
 using Orchard.Localization;
 using Orchard.Security.Permissions;
 using Orchard.UI.Navigation;
+using Outercurve.Projects.ViewModels;
 using Xunit;
 
 namespace Outercurve.Projects.Tests.Controllers.CLAAdminControllerTests
@@ -24,8 +25,8 @@ namespace Outercurve.Projects.Tests.Controllers.CLAAdminControllerTests
 
 
             //index
-            Assert.IsType<HttpUnauthorizedResult>(controller.Index(null));
-            Assert.IsType<HttpUnauthorizedResult>(controller.Index(It.IsAny<PagerParameters>()));
+            Assert.IsType<HttpUnauthorizedResult>(controller.Index(null, null));
+            Assert.IsType<HttpUnauthorizedResult>(controller.Index(It.IsAny<CLAIndexOptions>(), It.IsAny<PagerParameters>()));
 
             //Create
 
