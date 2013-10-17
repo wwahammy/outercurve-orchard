@@ -62,6 +62,10 @@ namespace Outercurve.Projects.Models
             set { Record.EmployerSignedOn = value; }
         }
 
+        public bool HasEmployerSignature {
+            get { return EmployerSignedOn.HasValue; }
+        }
+
         public string LocationOfCLA { 
             get { return Record.LocationOfCLA; }
             set { Record.LocationOfCLA = value; }
@@ -135,6 +139,23 @@ namespace Outercurve.Projects.Models
             set { Record.EmployerMustSignBy = value; }
         }
 
+        /// <summary>
+        /// given a set of CLAs, I need to know all the users referred to in order to do another query for the users
+        /// </summary>
+        /// <param name="clas"></param>
+        /// <returns></returns>
+        public static IEnumerable<int> GetUsersFromListOfCLAs(IEnumerable<CLAPart> clas) {
+            var ret = new HashSet<int>();
+            foreach (var cla in clas)
+            {
+                if (cla.CLASigner != null)
+                    ret.Add(cla.CLASigner.Id);
+                if (cla.FoundationSigner != null)
+                    ret.Add(cla.FoundationSigner.Id);
+            }
+
+            return ret;
+        }
 
     }
 
