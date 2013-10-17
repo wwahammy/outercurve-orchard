@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+
 using MarkdownSharp;
 using Orchard;
 using Orchard.ContentManagement;
@@ -15,6 +16,7 @@ using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Logging;
 using Orchard.Mvc;
+using Orchard.Roles.Models;
 using Orchard.Security;
 using Orchard.Settings;
 using Orchard.UI.Admin;
@@ -33,6 +35,7 @@ namespace Outercurve.Projects.Controllers
         private readonly IProjectService _projectService;
         private readonly ICLAToOfficeService _officeService;
         private readonly ICLATemplateService _templateService;
+     
         public ILogger Logger;
 
         public CLAAdminController(IOrchardServices services, IExtendedUserPartService extUserService, IGalleryService galleryService, ITransactionManager transaction, IShapeFactory shapeFactory, ISiteService siteService, IProjectService projectService, 
@@ -41,6 +44,7 @@ namespace Outercurve.Projects.Controllers
             _projectService = projectService;
             _officeService = officeService;
             _templateService = templateService;
+      
         }
 
 
@@ -54,9 +58,9 @@ namespace Outercurve.Projects.Controllers
 
                 if (options == null) 
                     options = new CLAIndexOptions();
-                
 
-                var query = _services.ContentManager.Query().ForType("CLA");
+
+                var query = _services.ContentManager.Query<CLAPart, CLAPartRecord>().WithQueryHintsFor("CLA");
 
                 switch (options.Order) {
                     case CLAOrder.Created:
@@ -70,19 +74,27 @@ namespace Outercurve.Projects.Controllers
                         query = query.OrderBy<CLAPartRecord>(r => r.SignedDate);
                         break;
 
+                
                 }
 
-                var pagerShape = Shape.Pager(pager).TotalItemCount(query.Count());
+                
 
+                var pagerShape = Shape.Pager(pager).TotalItemCount(query.Count());
+                
+                
                 var results = query.Slice(pager.GetStartIndex(), pager.PageSize);
 
-                 
+                var setOfAllNeededUsers = CLAPart.GetUsersFromListOfCLAs(results);
+               
+                var userDictionary = _services.ContentManager.GetMany<UserPart>(setOfAllNeededUsers, VersionOptions.Latest, new QueryHints().ExpandParts<ExtendedUserPart>().ExpandParts<UserRolesPart>()).ToDictionary(i => i.Id, i => i);
+                
+                
                 //this needs to be fixed:
                 var model = new CLAAdminIndexViewModel {
                     CLAs = results.Select(i => new CLAAdminIndexEntry {
-                        CLAItem = i,
-                       CLASignerName =  String.Format("{0} {1} - (User: {2})",i.As<CLAPart>().FirstName, i.As<CLAPart>().LastName, _services.ContentManager.Get<IUser>(i.As<CLAPart>().CLASigner.Id).UserName),
-                        FoundationSignerName = i.As<CLAPart>().FoundationSigner == null ? "-" : _extUserService.GetFullName(i.As<CLAPart>().FoundationSigner),
+                        CLAItem = i.ContentItem,
+                       CLASignerName =  String.Format("{0} {1} - (User: {2})",i.As<CLAPart>().FirstName, i.As<CLAPart>().LastName, userDictionary[i.As<CLAPart>().CLASigner.Id].UserName),
+                        FoundationSignerName = i.As<CLAPart>().FoundationSigner == null ? "-" : userDictionary[i.As<CLAPart>().FoundationSigner.Id].As<ExtendedUserPart>().FullName,
                         ProjectTitle = i.As<CommonPart>().Container == null ? "-" :i.As<CommonPart>().Container.As<TitlePart>().Title,
                         SignedDate = i.As<CLAPart>().SignedDate == null ? "Not Signed" : i.As<CLAPart>().SignedDate.ToLocalDateString(),
                         Employer = i.As<CLAPart>().Employer,
@@ -203,19 +215,19 @@ namespace Outercurve.Projects.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            var xlsx = _officeService.CreateCLASpreadsheet();
+            var csv = _officeService.CreateCLASpreadsheet();
 
             var cd = new System.Net.Mime.ContentDisposition
             {
                 // for example foo.bak
-                FileName = "CLAs.xlsx",
+                FileName = "CLAs.csv",
 
                 // always prompt the user for downloading, set to true if you want 
                 // the browser to try to show the file inline
                 Inline = false,
             };
             Response.AppendHeader("Content-Disposition", cd.ToString());
-            return File(xlsx, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            return File(csv, "text/csv");
         }
 
         public ActionResult Delete(int id) {
@@ -236,5 +248,10 @@ namespace Outercurve.Projects.Controllers
             var projects = _projectService.GetAllProjectsEntries().ToList();
             this.ViewBag.AllProjects = projects;
         }
+
+       
+
+
+
     }
 }

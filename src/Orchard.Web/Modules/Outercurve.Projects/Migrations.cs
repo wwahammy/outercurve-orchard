@@ -2,8 +2,6 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using DocumentFormat.OpenXml.CustomXmlSchemaReferences;
-using DocumentFormat.OpenXml.Office.CustomUI;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.Records;
