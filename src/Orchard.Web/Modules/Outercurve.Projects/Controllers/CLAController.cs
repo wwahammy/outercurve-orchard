@@ -67,7 +67,7 @@ namespace Outercurve.Projects.Controllers
             }
             
             var query = _services.ContentManager.Query().ForType("CLA").
-                Where<CommonPartRecord>(c => c.Container == project.Record).
+                Where<CommonPartRecord>(c => c.Container == project.Record).Where<CLAPartRecord>(c => c.IsValid()).
                 OrderBy<CLAPartRecord>(c =>
                    c.LastName).OrderBy<CLAPartRecord>(c => c.FirstName);
 
