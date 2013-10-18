@@ -19,7 +19,6 @@ namespace Outercurve.Projects.Models
         public ExtendedUserPartRecord CLASigner {
             get { return Record.CLASigner; }
             set { Record.CLASigner = value; }
-
         }
 
         public ExtendedUserPartRecord FoundationSigner
@@ -28,9 +27,7 @@ namespace Outercurve.Projects.Models
             set { Record.FoundationSigner = value; }
         }
 
-
-        public bool IsSignedByUser { get { return SignedDate.HasValue; }}
-        
+        public bool IsSignedByUser { get { return SignedDate.HasValue; }}        
 
         public DateTime? SignedDate {
             get { return Record.SignedDate; }
@@ -84,7 +81,6 @@ namespace Outercurve.Projects.Models
 
         public string Address2 { get { return Record.Address2; } set { Record.Address2 = value; } }
 
-
         public string City { get { return Record.City; } set { Record.City = value; } }
 
         public string State { get { return Record.State; } set { Record.State = value; } }
@@ -94,13 +90,11 @@ namespace Outercurve.Projects.Models
             get { return Record.Country; }
             set { Record.Country = value; }} 
 
-
         public bool OfficeValidOverride {
             get { return Record.OfficeValidOverride; }
             set { Record.OfficeValidOverride = value; }
 
         }
-
 
         public string FirstName{
             get { return Record.FirstName; }
@@ -112,10 +106,6 @@ namespace Outercurve.Projects.Models
             set { Record.LastName = value; }
         }
 
-
-
-       
-
         public string SignerEmail {
             get { return Record.SignerEmail; }
             set { Record.SignerEmail = value; }
@@ -126,7 +116,6 @@ namespace Outercurve.Projects.Models
             get { return Record.IsValid(); }
         
         }
-
        
         public string SignerFromCompanyEmail {
             get { return Record.SignerFromCompanyEmail; }
@@ -186,8 +175,6 @@ namespace Outercurve.Projects.Models
         public virtual string Comments { get; set; }
         public virtual bool IsCommitter { get; set; }
 
-       
-      
         public virtual string SignerEmail { get; set; }
 
         public virtual string Address1 { get; set; }
