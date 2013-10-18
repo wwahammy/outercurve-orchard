@@ -13,6 +13,7 @@ using Orchard.DisplayManagement;
 using Orchard.Settings;
 using Orchard.Themes;
 using Orchard.UI.Navigation;
+using Outercurve.Projects.Helpers;
 using Outercurve.Projects.Models;
 using Outercurve.Projects.Services;
 using Outercurve.Projects.ViewModels;
@@ -65,15 +66,24 @@ namespace Outercurve.Projects.Controllers
 
               
             }
-            
-            var query = _services.ContentManager.Query().ForType("CLA").
-                Where<CommonPartRecord>(c => c.Container == project.Record).Where<CLAPartRecord>(c => c.IsValid()).
+
+            var query = _services.ContentManager.Query<CLAPart, CLAPartRecord>().WithQueryHintsFor("CLA").ForType("CLA").
+                Where<CommonPartRecord>(c => c.Container == project.Record).
+                WhereCLAPartRecordIsValid().
                 OrderBy<CLAPartRecord>(c =>
-                   c.LastName).OrderBy<CLAPartRecord>(c => c.FirstName);
+                    c.LastName).OrderBy<CLAPartRecord>(c => c.FirstName)
+                .List().
+                Distinct(
+                new Helpers.EqualityComparer<CLAPart>(
+                    (c1, c2) => c1.CLASigner.Id == c2.CLASigner.Id, 
+                    c => c.CLASigner.Id.GetHashCode()));
+            
 
-            var list = query.List().Select(i => new CLAItemViewModel {FirstName = i.As<CLAPart>().FirstName, LastName = i.As<CLAPart>().LastName, IsValid = i.As<CLAPart>().IsValid}).ToList();
+
+            var list = query.Select(i => new CLAItemViewModel {FirstName = i.FirstName, LastName = i.LastName, IsValid = i.IsValid}).ToList();
 
 
+          
             var projTitle = project.As<TitlePart>().Title;
            
             return View("Project", (object) new CLAProjectViewModel {Items = list, Name = projTitle});

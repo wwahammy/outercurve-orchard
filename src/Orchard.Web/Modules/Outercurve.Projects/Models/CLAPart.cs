@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 using Orchard.Core.Common.Utilities;
@@ -9,8 +10,6 @@ using Outercurve.Projects.Models;
 namespace Outercurve.Projects.Models
 {
     public class CLAPart : ContentPart<CLAPartRecord> {
-
-      
 
         public string SignerFromCompany {
             get { return Record.SignerFromCompany; }
@@ -160,6 +159,9 @@ namespace Outercurve.Projects.Models
     }
 
     public class CLAPartRecord : ContentPartRecord {
+
+        public static readonly Expression<Func<CLAPartRecord, bool>> IsValidExpression = (c) => c.SignedDate != null && (!c.RequiresEmployerSigner || c.RequiresEmployerSigner && c.EmployerSignedOn != null) && !c.OfficeValidOverride && c.FoundationSignedOn != null;
+
         public virtual string SignerFromCompany { get; set; }
         public virtual string SignerFromCompanyEmail { get; set; }
         public virtual ExtendedUserPartRecord FoundationSigner { get; set; }
@@ -175,9 +177,9 @@ namespace Outercurve.Projects.Models
         public virtual DateTime? EmployerMustSignBy { get; set; }
 
         public virtual bool IsValid() {
-            return SignedDate.HasValue && (!RequiresEmployerSigner || RequiresEmployerSigner && EmployerSignedOn.HasValue) && !OfficeValidOverride && FoundationSignedOn.HasValue;
+            return IsValidExpression.Compile()(this);
         }
-  
+      
 
         public virtual bool OfficeValidOverride { get; set; }
 
@@ -198,15 +200,8 @@ namespace Outercurve.Projects.Models
 
         public virtual bool RequiresEmployerSigner { get; set; }
 
-        
-
-        
-
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
 
     }
-
-
-
 }
