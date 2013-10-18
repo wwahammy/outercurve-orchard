@@ -168,6 +168,8 @@
     <Compile Include="Handlers\ExtendedUserPartHandler.cs" />
     <Compile Include="Handlers\MultipleLeaderPartHandler.cs" />
     <Compile Include="Handlers\ProjectPartHandler.cs" />
+    <Compile Include="Helpers\ContentQueryExtensions.cs" />
+    <Compile Include="Helpers\EqualityComparer.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\HtmlPrefixScopeExtensions.cs" />
     <Compile Include="Helpers\IUrlHelperWrapper.cs" />
