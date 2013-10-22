@@ -49,7 +49,7 @@ namespace Outercurve.Projects.Controllers
 
 
         public ActionResult Index(CLAIndexOptions options, PagerParameters pagerParameters) {
-             if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to view agreements")))
+             if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to view agreements")))
                 return new HttpUnauthorizedResult();
 
             try {
@@ -116,7 +116,7 @@ namespace Outercurve.Projects.Controllers
         }
 
         public ActionResult Create() {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to list projects")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -131,7 +131,7 @@ namespace Outercurve.Projects.Controllers
 
         [HttpPost, ActionName("Create")]
         public ActionResult CreatePOST() {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to list projects")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -156,7 +156,7 @@ namespace Outercurve.Projects.Controllers
 
         public ActionResult Edit(int id) {
 
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to list projects")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -171,7 +171,7 @@ namespace Outercurve.Projects.Controllers
 
         [HttpPost, ActionName("Edit")]
         public ActionResult EditPOST(int id) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to list projects")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -194,7 +194,7 @@ namespace Outercurve.Projects.Controllers
         }
 
         public ActionResult GetIdAndVersion(string idVersion) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to list projects")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -210,7 +210,7 @@ namespace Outercurve.Projects.Controllers
        
 
         public ActionResult GetExcelOfCLAs() {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to list projects")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -231,7 +231,7 @@ namespace Outercurve.Projects.Controllers
         }
 
         public ActionResult Delete(int id) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to remove projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyCLAs, T("Not authorized to remove projects")))
             {
                 return new HttpUnauthorizedResult();
             }
