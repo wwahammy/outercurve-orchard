@@ -54,7 +54,7 @@ namespace Outercurve.Projects.Drivers
             var model = new EditCLATextViewModel();
 
             if (updater.TryUpdateModel(model, Prefix, null, null)) {
-                var hadError = false;
+                
                 _claTextPartService.UpdatePart(part.ContentItem, 
                     _templateService.GetCLATemplateFromIdVersion(model.SelectedTemplate));
             }
