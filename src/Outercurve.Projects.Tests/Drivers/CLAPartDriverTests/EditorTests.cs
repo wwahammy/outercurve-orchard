@@ -18,7 +18,7 @@ namespace Outercurve.Projects.Tests.Drivers.CLAPartDriverTests
 {
     public class EditorTests : ClaPartDriverTestFixture {
 
-        private ExtendedUserPartRecord _signer, _foundationSigner = null;
+        private ExtendedUserPartRecord _signer = null;
         private CLAPart _claPart = null;
         public class Strings
         {
