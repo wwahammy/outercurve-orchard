@@ -184,6 +184,7 @@
     <Compile Include="Models\ExtendedUserPart.cs" />
     <Compile Include="Models\MultipleLeaderPart.cs" />
     <Compile Include="Models\ProjectPart.cs" />
+    <Compile Include="ProjectPermissions.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Services\CLAMessageHandlerService.cs" />
