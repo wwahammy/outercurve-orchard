@@ -86,7 +86,7 @@ namespace Outercurve.Projects.Controllers
 
                 var setOfAllNeededUsers = CLAPart.GetUsersFromListOfCLAs(results);
                
-                var userDictionary = _services.ContentManager.GetMany<UserPart>(setOfAllNeededUsers, VersionOptions.Latest, new QueryHints().ExpandParts<ExtendedUserPart>().ExpandParts<UserRolesPart>()).ToDictionary(i => i.Id, i => i);
+                var userDictionary = _services.ContentManager.GetMany<UserPart>(setOfAllNeededUsers, VersionOptions.Latest, new QueryHints().ExpandParts<ExtendedUserPart>()).ToDictionary(i => i.Id, i => i);
                 
                 
                 //this needs to be fixed:
