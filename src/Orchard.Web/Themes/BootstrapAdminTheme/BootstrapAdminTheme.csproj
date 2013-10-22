@@ -57,12 +57,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Orchard.Core">
-      <HintPath>..\..\Core\bin\Orchard.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Orchard.Framework">
-      <HintPath>..\..\..\Orchard\bin\Debug\Orchard.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -208,11 +202,24 @@
     <Content Include="Views\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\font\fontawesome-webfont.eot" />
-    <None Include="Content\font\fontawesome-webfont.ttf" />
-    <None Include="Content\font\fontawesome-webfont.woff" />
-    <None Include="Content\font\FontAwesome.otf" />
-    <None Include="Views\Menu.cshtml" />
+    <Content Include="Content\font\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="Content\font\FontAwesome.otf" />
+    <Content Include="Views\Menu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
+      <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
+      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dashboard\Admin\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

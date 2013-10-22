@@ -1,0 +1,25 @@
+﻿@model dynamic
+@{ Layout.Title = T("Outercurve Services").ToString(); }
+<section class="dashboard group">
+    <div class="help-item">
+        <h2 class="start">@T("Agreement Templates")</h2>
+        <p>@T("The each agreement has a template. In some cases this is a CLA and in others it's an assignment agreement. <a href=\"{0}\">Add a new one or view the ones available</a>.",
+            Url.Action("Index", "CLATemplateAdmin", new { area = "Outercurve.Projects" }))</p>
+    </div>
+    <div class="help-item">
+        <h2 class="docs">@T("Galleries")</h2>
+        <p>@T("Projects go in galleries. <a href=\"{0}\"/>List, create or modify them.</a>",
+        Url.Action("Index", "ProjectAdmin", new { area = "Outercurve.Projects" } ))</p>
+    </div>
+    <div class="help-item">
+        <h2 class="gallery">@T("Projects")</h2>
+        <p>@T("Each agreement must be for a specific project. <a href=\"{0}\">List, Add and Edit Projects</a>",
+        Url.Action("Index", "ProjectAdmin", new { area = "Outercurve.Projects" }))
+        </p>
+    </div>
+    <div class="help-item">
+    <h2 class="friends">@T("Agreements")</h2>
+        <p>@T("Each contributor must sign an agreement and in some cases must be signed by multiple users. <a href=\"{0}\"/>List, create or modify these agreements</a>.",
+        Url.Action("Index", "CLAAdmin", new { area = "Outercurve.Projects" }))</p>
+    </div>
+</section>

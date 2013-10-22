@@ -31,7 +31,7 @@ namespace Outercurve.Projects.Controllers
         }
 
         public ActionResult Create(string returnUrl) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.QuickCreateUser, T("Not authorized to create a quick user")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -43,7 +43,7 @@ namespace Outercurve.Projects.Controllers
 
         [HttpPost, ActionName("Create")]
         public ActionResult CreatePOST([Bind(Exclude= "Id")]QuickUserViewModel model) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list projects")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.QuickCreateUser, T("Not authorized to create a quick user")))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -63,7 +63,13 @@ namespace Outercurve.Projects.Controllers
             }
 
             else {
-                return Redirect(model.ReturnUrl);
+                if (model.ReturnUrl != null) {
+                    return Redirect(model.ReturnUrl);
+                }
+                else {
+                    return Redirect(Url.Action("Index", new {Area = "Dashboard", Controller = "Admin"}));
+                }
+                
             }
             
         }

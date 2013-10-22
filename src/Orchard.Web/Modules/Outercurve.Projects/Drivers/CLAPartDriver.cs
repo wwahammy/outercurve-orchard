@@ -168,7 +168,7 @@ namespace Outercurve.Projects.Drivers
                 vm.CompanySigner = part.SignerFromCompany;
                 vm.CompanySignerEmail = part.SignerFromCompanyEmail;
                 vm.CompanySigningDate = part.EmployerSignedOn == null ? "": part.EmployerSignedOn.Value.ToLocalTime().ToString("d");
-                vm.HasCompanySigner = part.EmployerSignedOn != null;
+                vm.HasCompanySigner = part.HasEmployerSignature;
             }
             else {
                 vm.CompanySigningDate = currentTime.ToString("d");

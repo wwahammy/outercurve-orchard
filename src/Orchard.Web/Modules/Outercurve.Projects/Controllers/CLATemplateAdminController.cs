@@ -24,7 +24,7 @@ namespace Outercurve.Projects.Controllers {
 
 
         public ActionResult Index(PagerParameters pagerParameters) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to list custom forms")))
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyAgreementTemplates, T("Not authorized to list custom forms")))
                 return new HttpUnauthorizedResult();
 
             var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
@@ -51,7 +51,8 @@ namespace Outercurve.Projects.Controllers {
         }
 
         public ActionResult Create() {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized create agreement templates."))) {
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyAgreementTemplates, T("Not authorized create agreement templates.")))
+            {
                 return new HttpUnauthorizedResult();
             }
 
@@ -64,7 +65,8 @@ namespace Outercurve.Projects.Controllers {
 
         [HttpPost, ActionName("Create")]
         public ActionResult CreatePOST() {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to create agreement templates."))) {
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyAgreementTemplates, T("Not authorized to create agreement templates.")))
+            {
                 return new HttpUnauthorizedResult();
             }
 
@@ -86,7 +88,8 @@ namespace Outercurve.Projects.Controllers {
         }
 
         public ActionResult Edit(int id) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to edit agreement templates."))) {
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyAgreementTemplates, T("Not authorized to edit agreement templates.")))
+            {
                 return new HttpUnauthorizedResult();
             }
 
@@ -97,7 +100,8 @@ namespace Outercurve.Projects.Controllers {
 
         [HttpPost, ActionName("Edit")]
         public ActionResult EditPOST(int id) {
-            if (!_services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not authorized to edit agreement templates."))) {
+            if (!_services.Authorizer.Authorize(ProjectPermissions.ModifyAgreementTemplates, T("Not authorized to edit agreement templates.")))
+            {
                 return new HttpUnauthorizedResult();
             }
             var cla = _services.ContentManager.Get(id);
