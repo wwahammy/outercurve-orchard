@@ -39,11 +39,13 @@
             <button type="reset" class="btn">@T("Reset")</button>
         </div>
     }
-    @if (userCanRegister) {
+    @if (userCanRegister || enableLostPassword) {
         <hr />
         <div class="lregister">
-            Don't have Account? @Html.ActionLink(T("Register").Text, "Register")<br />
-            @if (enableLostPassword) { @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword") }
+           @if  (userCanRegister) { 
+               @:Don't have Account? @Html.ActionLink(T("Register").Text, "Register")<br>
+           }
+           @if (enableLostPassword) { @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword") }
         </div>
     }
 </div>
