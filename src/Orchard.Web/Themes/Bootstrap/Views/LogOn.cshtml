@@ -7,6 +7,7 @@
 <div class="well logreg">
     <h3>Sign In to @WorkContext.CurrentSite.SiteName</h3>
     <hr />
+    @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
     @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", new { ReturnUrl = Request.QueryString["ReturnUrl"] }), FormMethod.Post, new { @class = "form-horizontal" })) {
         <!-- Username -->
         <div class="control-group">
