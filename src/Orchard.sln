@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{E9C9F120-07BA-4DFB-B9C3-3AFB9D44C9D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{74E681ED-FECC-4034-B9BD-01B0BB1BDECA}"
@@ -238,6 +240,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Azure", "Orchard.Web\Modules\Orchard.Azure\Orchard.Azure.csproj", "{CBC7993C-57D8-4A6C-992C-19E849DFE71D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapAdminTheme", "Orchard.Web\Themes\BootstrapAdminTheme\BootstrapAdminTheme.csproj", "{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D6C79A4E-A1F2-45E6-BDC0-32EF430323E6}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -997,16 +1006,6 @@ Global
 		{25E68CE8-EB2B-493C-94BC-10706A5AF682}.FxCop|Any CPU.Build.0 = Release|Any CPU
 		{25E68CE8-EB2B-493C-94BC-10706A5AF682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E68CE8-EB2B-493C-94BC-10706A5AF682}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.CodeCoverage|Any CPU.ActiveCfg = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.CodeCoverage|Any CPU.Build.0 = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Coverage|Any CPU.ActiveCfg = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Coverage|Any CPU.Build.0 = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.FxCop|Any CPU.ActiveCfg = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.FxCop|Any CPU.Build.0 = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBC7993C-57D8-4A6C-992C-19E849DFE71D}.CodeCoverage|Any CPU.ActiveCfg = Release|Any CPU
 		{CBC7993C-57D8-4A6C-992C-19E849DFE71D}.CodeCoverage|Any CPU.Build.0 = Release|Any CPU
 		{CBC7993C-57D8-4A6C-992C-19E849DFE71D}.Coverage|Any CPU.ActiveCfg = Release|Any CPU
@@ -1017,6 +1016,16 @@ Global
 		{CBC7993C-57D8-4A6C-992C-19E849DFE71D}.FxCop|Any CPU.Build.0 = Release|Any CPU
 		{CBC7993C-57D8-4A6C-992C-19E849DFE71D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBC7993C-57D8-4A6C-992C-19E849DFE71D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.CodeCoverage|Any CPU.ActiveCfg = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.CodeCoverage|Any CPU.Build.0 = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Coverage|Any CPU.ActiveCfg = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Coverage|Any CPU.Build.0 = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.FxCop|Any CPU.ActiveCfg = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.FxCop|Any CPU.Build.0 = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE60F705-DBB6-4CCB-A18E-875D4BE17C74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
