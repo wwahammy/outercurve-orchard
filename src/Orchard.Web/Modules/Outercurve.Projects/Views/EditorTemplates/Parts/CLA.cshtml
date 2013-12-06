@@ -147,9 +147,9 @@
         </div>
                  
         <div class="control-group offset1" data-bind="visible: needsCompanySignature">
-            @Html.ControlLabelFor(m => m.NeedCompanySignature, T("Has Company Signature"))
+            @Html.ControlLabelFor(m => m.HasCompanySigner, T("Has Company Signature"))
             <div class="controls">
-                @Html.CheckBoxFor(m => m.NeedCompanySignature, new Dictionary<string, object> {{"data-bind","checked: hasEmployerSigner"}} )
+                @Html.CheckBoxFor(m => m.HasCompanySigner, new Dictionary<string, object> { { "data-bind", "checked: hasEmployerSigner" } })
                      
             </div>
         </div>
